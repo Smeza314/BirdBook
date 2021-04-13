@@ -25,4 +25,15 @@ router.get('/users', passport.authenticate('jwt'), (req, res) => {
   res.json(req.user)
 })
 
+router.put('/users/friend/:id', passport.authenticate('jwt'), (req,res) => {
+  User.findByIdAndUpdate(req.user._id, { $push: {friends: req.params.id} })
+    .then(() => {
+      User.findByIdAndUpdate(req.params.id, { $push: { friends: req.user._id } })
+        .then(() => res.sendStatus(200) )
+        .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
+
+})
+
 module.exports = router
