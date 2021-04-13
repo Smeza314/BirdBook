@@ -7,10 +7,16 @@ router.get('/comments', (req, res) => {
     .catch(err => console.log(err))
 })
 
-router.post('/comments'. (req, res) => {
+router.post('/comments', (req, res) => {
   Comment.create(req.body)
-  .then(comment => res.json(comment))
-  .catch(err => console.log(err))
+    .then(comment => res.json(comment))
+    .catch(err => console.log(err))
+})
+
+router.put('/comments', (req, res) => {
+  Comment.findByIdAndUpdate (req.params.id, req.body)
+    .then(() => res.sendStatus(200))
+    .catch(err => console.log(err))
 })
 
 router.delete('/comments/:id', (req, res) => {
