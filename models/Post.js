@@ -8,10 +8,10 @@ const Post = new Schema({
     ref: 'User'
   },
   likes: Number,
-  comments: {
+  comments: [{
     type: Schema.Types.ObjectId,
     ref: 'Comment'
-  },
+  }],
   post_date: Date
 })
 
