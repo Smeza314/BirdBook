@@ -1,5 +1,9 @@
-module.exports = require('mongoose').connect(process.env.MONGODB_URI || 'mongodb://localhost/birdbook_db', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false
-})
+const router = require('express').Router()
+
+router.use('/api', require('./userRoutes.js'))
+router.use('/api', require('./postRoutes.js'))
+router.use('/api', require('./messageRoutes.js'))
+router.use('/api', require('./commentRoutes.js'))
+
+
+module.exports = router
