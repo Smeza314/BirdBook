@@ -13,7 +13,7 @@ router.post('/comments', (req, res) => {
     .catch(err => console.log(err))
 })
 
-router.put('/comments', (req, res) => {
+router.put('/comments/:id', (req, res) => {
   Comment.findByIdAndUpdate (req.params.id, req.body)
     .then(() => res.sendStatus(200))
     .catch(err => console.log(err))
