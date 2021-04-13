@@ -24,3 +24,5 @@ router.delete('/comments/:id', (req, res) => {
     .then(() => res.sendStatus(200))
     .catch(err => console.log(err))
 })
+
+module.exports = router
