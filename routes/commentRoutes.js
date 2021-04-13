@@ -7,7 +7,7 @@ router.get('/comments', (req, res) => {
     .catch(err => console.log(err))
 })
 
-router.post('/comments'. (req, res) => {
+router.post('/comments', (req, res) => {
   Comment.create(req.body)
   .then(comment => res.json(comment))
   .catch(err => console.log(err))
