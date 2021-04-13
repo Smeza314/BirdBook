@@ -24,6 +24,8 @@ passport.use(new JwtStrategy({
   secretOrKey: process.env.SECRET
 }, ({ id }, cb) => User.findById(id)
   .populate('posts')
+  .populate('comments') 
+  .populate('messages') 
   .then(user => cb(null, user))
   .catch(err => cb(err))))
 
