@@ -1,9 +1,12 @@
 const { model, Schema } = require('mongoose')
 
 const Comment = new Schema({
-  text: String,
-  date: Date,
-  
+  post_text: String,
+  post_date: Date,
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+
 })
 
 module.exports = model('Comment', Comment)
