@@ -1,6 +1,4 @@
-const { SchemaTypes } = require("mongoose")
-
-const { model, Schema } require('mongoose')
+const { model, Schema } = require('mongoose')
 
 const Message = new Schema ({
   sender: {
