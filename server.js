@@ -26,6 +26,7 @@ passport.use(new JwtStrategy({
   .populate('posts')
   .populate('comments') 
   .populate('messages') 
+  .populate('friends')
   .then(user => cb(null, user))
   .catch(err => cb(err))))
 

@@ -25,4 +25,31 @@ router.get('/users', passport.authenticate('jwt'), (req, res) => {
   res.json(req.user)
 })
 
+// GET route to grab all users
+router.get('/users/all', passport.authenticate('jwt'), (req, res) => {
+  User.find({})
+    .then(users => res.json(users))
+    .catch(err => console.log(err))
+  
+})
+
+// DELETE route to delete the currently signed in user
+router.delete('/users', passport.authenticate('jwt'), (req, res) => {
+  User.findByIdAndDelete(req.user._id)
+    .then(() => res.sendStatus(200))
+    .catch(err => console.log(err))
+})
+
+// PUT route to add a user to the friend list 
+router.put('/users/friend/:id', passport.authenticate('jwt'), (req,res) => {
+  User.findByIdAndUpdate(req.user._id, { $push: {friends: req.params.id} })
+    .then(() => {
+      User.findByIdAndUpdate(req.params.id, { $push: { friends: req.user._id } })
+        .then(() => res.sendStatus(200) )
+        .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
+
+})
+
 module.exports = router
