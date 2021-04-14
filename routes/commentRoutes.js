@@ -8,22 +8,23 @@ router.get('/comments', passport.authenticate('jwt'), (req, res) => {
     .catch(err => console.log(err))
 })
 
-router.post('/comments', passport.authenticate('jwt'), (req, res) => {
+router.post('/comments/:id', passport.authenticate('jwt'), (req, res) => {
   Comment.create({
     comment_text: req.body.comment_text,
-    author: req.user_id
+    comment_date: Date.now(),
+    author: req.user._id,
+    post: req.params.id
   })
   .then(comment => {
     User.findByIdAndUpdate(req.user._id, { $push: { comments: comment._id } })
-      .then(()=> res.json(comment))
+      .then(() => {
+        Post.findByIdAndUpdate(req.params.id, { $push: { comments: comment._id } })
+          .then(() => res.json(comment))
+          .catch(err => console.log(err))
+      })
       .catch (err => console.log(err))
   })
-  .then(comment => {
-    Post.findByIdAndUpdate(req.post._id, { $push: { comments: comment._id } })
-      .then(() => res.json(comment))
-      .catch(err => console.log(err))
-  })
-    .catch(err => console.log(err))
+  .catch(err => console.log(err))
 })
 
 router.put('/comments/:id', passport.authenticate('jwt'), (req, res) => {
