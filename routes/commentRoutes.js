@@ -1,28 +1,47 @@
 const router =  require('express').Router()
-const { Comment } = require('../models')
+const { Comment, User, Post } = require('../models')
 
-router.get('/comments', (req, res) => {
+router.get('/comments', passport.authenticate('jwt'), (req, res) => {
   Comment.find({})
-    .then(comment => res.json(comment))
+    .then(comments => res.json(comments))
     .catch(err => console.log(err))
 })
 
-router.post('/comments', (req, res) => {
-  Comment.create(req.body)
-    .then(comment => res.json(comment))
+router.post('/comments', passport.authenticate('jwt'), (req, res) => {
+  Comment.create({
+    comment_text: req.body.comment_text,
+    author: req.user_id
+  })
+  .then(comment => {
+    User.findByIdAndUpdate(req.user._id, { $push: { comments: comment._id } })
+      .then(()=> res.json(comment))
+      .catch (err => console.log(err))
+  })
+  .then(comment => {
+    Post.findByIdAndUpdate(req.post._id, { $push: { comments: comment._id } })
+      .then(() => res.json(comment))
+      .catch(err => console.log(err))
+  })
     .catch(err => console.log(err))
 })
 
-router.put('/comments/:id', (req, res) => {
+router.put('/comments/:id', passport.authenticate('jwt'), (req, res) => {
   Comment.findByIdAndUpdate (req.params.id, req.body)
     .then(() => res.sendStatus(200))
     .catch(err => console.log(err))
 })
 
-router.delete('/comments/:id', (req, res) => {
+router.delete('/comments/:id', passport.authenticate('jwt'), (req, res) => {
   Comment.findByIdAndDelete(req.params.id)
     .then(() => res.sendStatus(200))
     .catch(err => console.log(err))
 })
 
 module.exports = router
+
+  // .then(comment => {
+  //   Post.findByIdAndUpdate(req.post._id, { $push: { comments: comment._id } })
+  //     .then(() => res.json(comment))
+  //     .catch(err => console.log(err))
+  // })
+  // .catch(err => console.log(err))
