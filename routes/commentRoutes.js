@@ -1,5 +1,6 @@
 const router =  require('express').Router()
 const { Comment, User, Post } = require('../models')
+const passport = require('passport')
 
 router.get('/comments', passport.authenticate('jwt'), (req, res) => {
   Comment.find({})

@@ -19,9 +19,9 @@ router.delete('/messages/:id', (req, res) => {
     .catch(err => console.log(err))
 })
 
-router.put('/messages/:id'), (req, res) => {
+router.put('/messages/:id', (req, res) => {
   Message.findByIdAndUpdate(req.params.id, req.body)
-  .then(( => res.SendStatus(200))
+  .then(() => res.SendStatus(200))
   .catch(err=> console.log(err))
 })
 
