@@ -30,4 +30,12 @@ router.post('/posts', passport.authenticate('jwt'), (req, res) => {
     .catch(err => console.log(err))
 })
 
+router.put('/posts/likes/:id', passport.authenticate('jwt'), (req, res) => {
+  Post.findByIdAndUpdate(req.params.id, { $addToSet: { likes: req.user._id } })
+    .then(() => {
+      res.sendStatus(200)
+    })
+    .catch(err => console.log(err))
+})
+
 module.exports = router
