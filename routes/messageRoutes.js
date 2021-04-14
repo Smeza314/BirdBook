@@ -15,10 +15,19 @@ router.post('/messages/:id', passport.authenticate('jwt'), (req, res) => {
     receiver: req.params.id,
     messages: []
   })
-    .then(message => res.json(message))
+    .then(message => {
+      User.findByIdAndUpdate(req.user._id, { $push: { message: message._id } })
+        .then(() => {
+          User.findByIdAndUpdate(req.params.id, { $push: { messages: message._id } })
+            .then(() => res.json(message))
+            .catch(err => console.log(err))
+        })
+        .catch(err => console.log(err))
+    })
     .catch(err => console.log(err))
 })
 
+// DELETE route to delete the whole message conversation
 router.delete('/messages/:id', passport.authenticate('jwt'), (req, res) => {
   Message.findByIdAndDelete(req.params.id)
     .then(() => res.sendStatus(200))
