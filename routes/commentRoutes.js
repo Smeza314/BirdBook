@@ -38,10 +38,3 @@ router.delete('/comments/:id', passport.authenticate('jwt'), (req, res) => {
 })
 
 module.exports = router
-
-  // .then(comment => {
-  //   Post.findByIdAndUpdate(req.post._id, { $push: { comments: comment._id } })
-  //     .then(() => res.json(comment))
-  //     .catch(err => console.log(err))
-  // })
-  // .catch(err => console.log(err))
