@@ -10,8 +10,8 @@ const Message = new Schema ({
     ref: 'User'
   },
   messages: [{
-    textcontent: String,
-    message_date: Date,
+    text_content: String,
+    date: Date,
     author: { 
       type: Schema.Types.ObjectId,
       ref: 'User'
