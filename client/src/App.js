@@ -8,10 +8,12 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Message from './pages/Message'
+import Navbar from './components/Navbar'
 const App = () => {
   return (
     <Router>
       <div>
+        <Navbar>
         <div>
           <Link to='/'>home</Link>
           <Link to='/login'>login</Link>
@@ -32,6 +34,7 @@ const App = () => {
             <Message />
           </Route>
         </Switch>
+        </Navbar>
       </div>
     </Router>
   )
