@@ -32,32 +32,32 @@ const theme = createMuiTheme({
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-    <Router>
-      <div>
-        <Navbar>
+      <Router>
         <div>
-          <Link to='/'>home</Link>
-          <Link to='/login'>login</Link>
-          <Link to='/profile'>profile</Link>
-          <Link to='/message'>messages</Link>
+          <Navbar>
+          <div>
+            <Link to='/'>home</Link>
+            <Link to='/login'>login</Link>
+            <Link to='/profile'>profile</Link>
+            <Link to='/message'>messages</Link>
+          </div>
+          <Switch>
+            <Route exact path='/'>
+              <Home />
+            </Route>
+            <Route path='/login'>
+              <Login />
+            </Route>
+            <Route path='/profile'>
+              <Profile />
+            </Route>
+            <Route path='/message'>
+              <Message />
+            </Route>
+          </Switch>
+          </Navbar>
         </div>
-        <Switch>
-          <Route exact path='/'>
-            <Home />
-          </Route>
-          <Route path='/login'>
-            <Login />
-          </Route>
-          <Route path='/profile'>
-            <Profile />
-          </Route>
-          <Route path='/message'>
-            <Message />
-          </Route>
-        </Switch>
-        </Navbar>
-      </div>
-    </Router>
+      </Router>
     </ThemeProvider>
   )
 }
