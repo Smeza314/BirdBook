@@ -15,7 +15,13 @@ const User = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Message'
   }],
+  friends: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 })
+
+// Add picture section to model. 
 
 User.plugin(require('passport-local-mongoose'))
 
