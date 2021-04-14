@@ -8,6 +8,8 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Message from './pages/Message'
+
+
 const App = () => {
   return (
     <Router>
