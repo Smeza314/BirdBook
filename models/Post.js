@@ -7,7 +7,10 @@ const Post = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  likes: Number,
+  likes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   comments: [{
     type: Schema.Types.ObjectId,
     ref: 'Comment'

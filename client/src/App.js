@@ -4,36 +4,61 @@ import {
   Switch,
   Link
 } from 'react-router-dom'
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles'
+import { createMuiTheme } from '@material-ui/core/styles'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Message from './pages/Message'
+import Navbar from './components/Navbar'
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#ffff81',
+      main: '#ffd54f',
+      dark: '#c8a415',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#ffffff',
+      main: '#e8eaf6',
+      dark: '#b6b8c3',
+      contrastText: '#000',
+    },
+  },
+})
+
 const App = () => {
   return (
-    <Router>
-      <div>
+    <ThemeProvider theme={theme}>
+      <Router>
         <div>
-          <Link to='/'>home</Link>
-          <Link to='/login'>login</Link>
-          <Link to='/profile'>profile</Link>
-          <Link to='/message'>messages</Link>
+          <Navbar>
+          <div>
+            <Link to='/'>home</Link>
+            <Link to='/login'>login</Link>
+            <Link to='/profile'>profile</Link>
+            <Link to='/message'>messages</Link>
+          </div>
+          <Switch>
+            <Route exact path='/'>
+              <Home />
+            </Route>
+            <Route path='/login'>
+              <Login />
+            </Route>
+            <Route path='/profile'>
+              <Profile />
+            </Route>
+            <Route path='/message'>
+              <Message />
+            </Route>
+          </Switch>
+          </Navbar>
         </div>
-        <Switch>
-          <Route exact path='/'>
-            <Home />
-          </Route>
-          <Route path='/login'>
-            <Login />
-          </Route>
-          <Route path='/profile'>
-            <Profile />
-          </Route>
-          <Route path='/message'>
-            <Message />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+      </Router>
+    </ThemeProvider>
   )
 }
 
