@@ -10,7 +10,7 @@ import { createMuiTheme } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   menuButton: {
     marginRight: theme.spacing(2)
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: 'none',
-    color: theme.palette.primary.main
+    color: theme.palette.secondary.light
   }
 }))
 
@@ -29,7 +29,7 @@ const Navbar = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position='static'>
+      <AppBar>
         <Toolbar>
           <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='menu'>
             <MenuIcon />
@@ -38,10 +38,10 @@ const Navbar = () => {
             BirdBook
           </Typography>
           <Link to='/' className={classes.link}>
-            <Button color='inherit'>Register</Button>
+            <Button color='inherit'>Feed</Button>
           </Link>
-          <Link to='/saved' className={classes.link}>
-            <Button color='inherit'>Login</Button>
+          <Link to='/profile' className={classes.link}>
+            <Button color='inherit'>Profile</Button>
           </Link>
         </Toolbar>
       </AppBar>

@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const { Message } = require('../models')
+const passport = require('passport')
 
 router.get('/messages', passport.authenticate('jwt'), (req, res) => {
   Message.find({})
