@@ -1,9 +1,9 @@
-import React from "react";
-import "./index.css";
+import "../../index.css";
+import CopyrightIcon from '@material-ui/icons/Copyright';
 
 const Footer = () => (
   <footer className="footer">
-    <p>Some footer nonsense!</p>
+    <p><CopyrightIcon />BirdBook</p>
   </footer>
 )
 

@@ -12,6 +12,7 @@ import Profile from './pages/Profile'
 import Message from './pages/Message'
 import Navbar from './components/Navbar'
 import stickyFooter from './components/stickyFooter'
+import Footer from './components/stickyFooter'
 
 const theme = createMuiTheme({
   palette: {
@@ -51,6 +52,7 @@ const App = () => {
             </Route>
           </Switch>
         </div>
+      <Footer></Footer>
       </Router>
     </ThemeProvider>
   )
