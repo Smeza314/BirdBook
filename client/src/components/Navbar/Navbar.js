@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import { Link } from 'react-router-dom'
 import { createMuiTheme } from '@material-ui/core/styles'
+import '../../App.css'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: 'none',
-    color: theme.palette.secondary.light
+    color: theme.palette.secondary.dark
   }
 }))
 
@@ -30,22 +31,26 @@ const Navbar = () => {
   return (
     <div className={classes.root}>
       <AppBar>
-        <Toolbar>
-          <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='menu'>
+        <Toolbar variant='dense'>
+          <img className='Logo' alt='logo' src= '/images/birdBook2.png'/>
+          {/* <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='menu'>
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography variant='h6' className={classes.title}>
-            BirdBook
-          </Typography>
           <Link to='/' className={classes.link}>
             <Button color='inherit'>Feed</Button>
           </Link>
           <Link to='/profile' className={classes.link}>
             <Button color='inherit'>Profile</Button>
           </Link>
+          </Typography>
+          <Link to='/login' className={classes.link}>
+            <Button color='inherit'>Sign Out</Button>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>
+            
   )
 }
 
