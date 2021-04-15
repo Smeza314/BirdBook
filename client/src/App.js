@@ -15,15 +15,15 @@ import Navbar from './components/Navbar'
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: '#ffff81',
-      main: '#ffd54f',
-      dark: '#c8a415',
+      light: '#60ad5e',
+      main: '#29b6f6',
+      dark: '#005005',
       contrastText: '#fff',
     },
     secondary: {
-      light: '#ffffff',
-      main: '#e8eaf6',
-      dark: '#b6b8c3',
+      light: '#212121',
+      main: '#424242',
+      dark: '#000000',
       contrastText: '#000',
     },
   },
