@@ -51,7 +51,6 @@ router.delete('/messages/:id', passport.authenticate('jwt'), (req, res) => {
     .catch(err => console.log(err))
 })
 
-<<<<<<< HEAD
 // PUT route to content add to messages
 router.put('/messages/:id', passport.authenticate('jwt'), (req, res) => {
   let newMessage = {
@@ -61,11 +60,6 @@ router.put('/messages/:id', passport.authenticate('jwt'), (req, res) => {
   }
   Message.findByIdAndUpdate(req.params.id, { $push: { messages: newMessage } })
   .then(() => res.sendStatus(200))
-=======
-router.put('/messages/:id', (req, res) => {
-  Message.findByIdAndUpdate(req.params.id, req.body)
-  .then(() => res.SendStatus(200))
->>>>>>> b078e9a0148f9b4b9b46991450cd2e2029653002
   .catch(err=> console.log(err))
 })
 
