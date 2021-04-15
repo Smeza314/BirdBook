@@ -59,11 +59,7 @@ router.put('/messages/:id', passport.authenticate('jwt'), (req, res) => {
     author: req.user._id
   }
   Message.findByIdAndUpdate(req.params.id, { $push: { messages: newMessage } })
-<<<<<<< HEAD
-  .then(() => res.SendStatus(200))
-=======
   .then(() => res.sendStatus(200))
->>>>>>> 46a910515dbc01b18c0f5b9938e45bb5b361911e
   .catch(err=> console.log(err))
 })
 
