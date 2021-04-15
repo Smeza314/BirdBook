@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: 'none',
-    color: theme.palette.secondary.dark
+    color: theme.palette.secondary.main
   }
 }))
 
