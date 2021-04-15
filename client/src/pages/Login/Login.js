@@ -99,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const SignUp = () => {
+const Login = () => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -240,4 +240,4 @@ const SignUp = () => {
   );
 }
 
-export default SignUp
+export default Login
