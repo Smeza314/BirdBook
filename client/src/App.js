@@ -34,7 +34,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Router>
         <div>
-          <Navbar />
+          <Navbar/>
           <Switch>
             <Route exact path='/'>
               <Home />
