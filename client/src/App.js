@@ -35,13 +35,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Router>
         <div>
-          <Navbar>
-          <div>
-            <Link to='/'>home</Link>
-            <Link to='/login'>login</Link>
-            <Link to='/profile'>profile</Link>
-            <Link to='/message'>messages</Link>
-          </div>
+          <Navbar/>
           <Switch>
             <Route exact path='/'>
               <Home />
@@ -56,7 +50,6 @@ const App = () => {
               <Message />
             </Route>
           </Switch>
-          </Navbar>
         </div>
       </Router>
     </ThemeProvider>
