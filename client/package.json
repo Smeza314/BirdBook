@@ -4,10 +4,7 @@
   "private": true,
   "proxy": "http://localhost:3001",
   "dependencies": {
-<<<<<<< HEAD
     "@ant-design/icons": "^4.6.2",
-=======
->>>>>>> 04216f2f10b152f834fbecf0d8eef51295974d21
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.10",
