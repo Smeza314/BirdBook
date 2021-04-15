@@ -4,13 +4,14 @@ import {
   Switch,
   Link
 } from 'react-router-dom'
-import { makeStyles, ThemeProvider } from '@material-ui/core/styles'
+import { ThemeProvider } from '@material-ui/core/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Message from './pages/Message'
 import Navbar from './components/Navbar'
+import stickyFooter from './components/stickyFooter'
 
 const theme = createMuiTheme({
   palette: {
