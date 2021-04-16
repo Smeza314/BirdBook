@@ -1,8 +1,7 @@
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
-  Link
+  Switch
 } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
@@ -11,7 +10,6 @@ import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Message from './pages/Message'
 import Navbar from './components/Navbar'
-import stickyFooter from './components/stickyFooter'
 import Footer from './components/stickyFooter'
 
 const theme = createMuiTheme({
@@ -58,4 +56,4 @@ const App = () => {
   )
 }
 
-export default App;
+export default App
