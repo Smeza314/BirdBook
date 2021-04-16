@@ -14,8 +14,6 @@ body {
   height: 100%;
 }
 
-.container {}
-
 .footer {
   flex-shrink: 0;
   text-align: center;
