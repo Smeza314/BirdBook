@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    height: '100vh'
+    height: '95vh'
   },
   
 }));
