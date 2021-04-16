@@ -37,7 +37,15 @@ const useStyles = makeStyles((theme) => ({
   header: {
     height: '500px', 
     width: '100%'
-  }
+  },
+
+   paper2: {
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    marginTop: 4,
+    marginBottom: 4
+  },
   
 }));
 
@@ -56,36 +64,21 @@ const Profile = () => {
   return (
     <>
       <div className={classes.root}>
-        <Grid container spacing={3}>
-          <Grid item xs={2}>
-            <Paper className={classes.paper}>1</Paper>
-          </Grid>
+        <Grid container
+          direction="column"
+          justify="space-evenly"
+          alignItems="center" >
           <Grid item xs={8}>
-            <Paper className={classes.paper}>
+            {/* <Paper className={classes.paper}> */}
               <img
               className={classes.header} 
                 src="https://cdn.discordapp.com/attachments/818908729029689351/831993325774962718/wp6053464.jpg" alt=""/>
-            </Paper>
-          </Grid>
-          <Grid item xs={2}>
-            <Paper className={classes.paper}>4</Paper>
-          </Grid>
-          <Grid item xs={2}>
-            <Paper className={classes.paper}>5</Paper>
+            {/* </Paper> */}
           </Grid>
           <Grid item xs={8}>
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper2}>
               <h1>Your Posts</h1>
             </Paper>
-          </Grid>
-          {/* <Grid item xs={3}>
-            <Paper className={classes.paper}>7</Paper>
-          </Grid> */}
-          <Grid item xs={2}>
-            <Paper className={classes.paper}>8</Paper>
-          </Grid>
-          <Grid item xs={2}>
-            <Paper className={classes.paper}>9</Paper>
           </Grid>
           <Grid item xs={8}>
             <Paper 
@@ -128,12 +121,6 @@ const Profile = () => {
                   </TextField>
             </Paper>
           </Grid>
-          <Grid item xs={2}>
-            <Paper className={classes.paper}>12</Paper>
-          </Grid>
-          <Grid item xs={2}>
-            <Paper className={classes.paper}>13</Paper>
-          </Grid>
           <Grid item xs={8}>
             <Paper 
             className={classes.posts}
@@ -175,9 +162,6 @@ const Profile = () => {
                   </TextField>
             </Paper>
           </Grid>
-          {/* <Grid item xs={3}>
-            <Paper className={classes.paper}>11</Paper>
-          </Grid> */}
           <Grid item xs={2}>
             <Paper className={classes.paper}>14</Paper>
           </Grid>
