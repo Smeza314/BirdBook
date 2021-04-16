@@ -11,7 +11,7 @@ const Message = () => {
     <ChatEngine 
       height='100vh'
       projectID={projectID}
-      userName='andrewleee10'
+      userName='johndoe'
       userSecret='hotdog'
       renderChatFeed={(chatAppProps) => <ChatFeed  {...chatAppProps} />}
       onNewMessage={() => new Audio('https://chat-engine-assets.s3.amazonaws.com/click.mp3').play()}

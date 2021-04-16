@@ -6,15 +6,15 @@ const TheirMessage = ({ lastMessage, message }) => {
       {isFirstMessageByUser && (
         <div
           className="message-avatar"
-          style={{ backgroundImage: `url(${message?.sender?.avatar})` }}
+          style={{ backgroundImage: message.sender && `url(${message.sender.avatar})` }}
         />
       )}
       {
         // image rendering
-        message?.attachements?.length > 0
+        message.attachments && message.attachments.length > 0
           ? (
             <img
-              src={message.attaachments[0].file}
+              src={message.attachments[0].file}
               alt="message-attachement"
               className="message-images"
               style={{ marginLeft: isFirstMessageByUser ? '4px' : '48px' }}

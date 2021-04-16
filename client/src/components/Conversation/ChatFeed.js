@@ -14,7 +14,7 @@ const ChatFeed = (props) => {
         className="read-receipt"
         style={{
           float: isMyMessage ? 'right' : 'left',
-          backgroundImage: `url(${person?.person?.avatar})`
+          backgroundImage: person.person.avatar && `url(${person.person.avatar})`
         }}
       />
     ))
@@ -28,7 +28,7 @@ const ChatFeed = (props) => {
       const isMyMessage = userName === message.sender.username
 
       return (
-        <div key={`mssg_${index} style={{width: '100%'}}`}>
+        <div key={`msg_${index} style={{ width: '100%' }}`}>
           <div className='message-block'>
             {
               isMyMessage
@@ -39,16 +39,11 @@ const ChatFeed = (props) => {
           <div className="read-receipts" style={{ marginRight: isMyMessage ? '18px' : '0px', marginLeft: isMyMessage ? '0px' : '68px' }}>
             {renderReactReceipts(message, isMyMessage)}
           </div>
-          <div style={{ height: '100px'}}/>
-          <div className='message-form-container'>
-            <MessageForm {...props} chatId={activeChat} />
-          </div>
         </div>
       )
     })
   }
-  
-  renderMessages()
+
 
   if(!chat) return 'Loading...'
   
@@ -61,6 +56,10 @@ const ChatFeed = (props) => {
         </div>
       </div>
       {renderMessages()}
+      <div style={{ height: '100px' }} />
+        <div className='message-form-container'>
+          <MessageForm {...props} chatId={activeChat} />
+      </div>
     </div>
   )
 }
