@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     textDecoration: 'none',
     color: theme.palette.secondary.main,
-    marginTop: 2,
+    marginTop: 6,
   }
 }))
 
