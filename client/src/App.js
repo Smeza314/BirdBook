@@ -11,10 +11,26 @@ import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Message from './pages/Message'
 import Navbar from './components/Navbar'
-import stickyFooter from './components/stickyFooter'
 import Footer from './components/stickyFooter'
 
 const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#60ad5e',
+      main: '#29b6f6',
+      dark: '#005005',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#212121',
+      main: '#424242',
+      dark: '#000000',
+      contrastText: '#000',
+    },
+  },
+})
+
+const footTheme = createMuiTheme({
   palette: {
     primary: {
       light: '#60ad5e',
@@ -58,4 +74,4 @@ const App = () => {
   )
 }
 
-export default App;
+export default App

@@ -1,10 +1,28 @@
-import "../../index.css";
+import "../../Footer.css";
 import CopyrightIcon from '@material-ui/icons/Copyright';
+import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/core/styles'
 
-const Footer = () => (
-  <footer className="footer">
-    <p><CopyrightIcon />BirdBook</p>
-  </footer>
-)
+const useStyles = makeStyles((footTheme) => ({
+  title: {
+    textDecoration: 'none',
+    color: footTheme.palette.secondary.main,
+    marginTop: 2
+  }
+}))
+
+const Footer = () => {
+  const classes = useStyles()
+
+  return (
+    <div className={classes.root}>
+      <footer className="footer">
+        <Typography variant='body1' className={classes.title}>
+          <CopyrightIcon style={{ fontSize: 12 }} /> BirdBook
+        </Typography>
+      </footer>
+    </div>
+  )
+} 
 
 export default Footer
