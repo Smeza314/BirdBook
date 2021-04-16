@@ -1,8 +1,7 @@
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
-  Link
+  Switch
 } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
@@ -14,23 +13,6 @@ import Navbar from './components/Navbar'
 import Footer from './components/stickyFooter'
 
 const theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: '#60ad5e',
-      main: '#29b6f6',
-      dark: '#005005',
-      contrastText: '#fff',
-    },
-    secondary: {
-      light: '#212121',
-      main: '#424242',
-      dark: '#000000',
-      contrastText: '#000',
-    },
-  },
-})
-
-const footTheme = createMuiTheme({
   palette: {
     primary: {
       light: '#60ad5e',

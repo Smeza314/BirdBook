@@ -3,11 +3,11 @@ import CopyrightIcon from '@material-ui/icons/Copyright';
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles((footTheme) => ({
+const useStyles = makeStyles((theme) => ({
   title: {
     textDecoration: 'none',
-    color: footTheme.palette.secondary.main,
-    marginTop: 2
+    color: theme.palette.secondary.main,
+    marginTop: 2,
   }
 }))
 
