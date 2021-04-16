@@ -72,6 +72,16 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
+  image: {
+    backgroundImage: 'url(https://cdn.discordapp.com/attachments/818908729029689351/831993325774962718/wp6053464.jpg)',
+    backgroundRepeat: 'no-repeat',
+    backgroundColor:
+      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    height: '100vh'
+  },
+  
 }));
 
 
@@ -85,7 +95,9 @@ const Login = () => {
   return (
     <>
 
-      <Container component="main" maxWidth="xs">
+      <Grid container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Grid item xs={false} sm={4}  lg={6} md={6} xl= {6} className={classes.image} />
         <div className={classes.root}>
           <AppBar position="static">
             <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered>
@@ -208,7 +220,7 @@ const Login = () => {
             </div>
           </TabPanel>
         </div>
-      </Container>
+      </Grid>
 
 
     </>
