@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
   posts: {
-    textAlign: 'left'
+    textAlign: 'left',
+    marginBottom: 5
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -84,10 +85,10 @@ const Profile = () => {
             <Paper 
             className={classes.posts}
             elevation={3}
-            variant="outlined">
+              variant="outlined" >
               <TextField
                 id="outlined-full-width"
-                style={{ margin: 8 }}
+                style={{ margin: 0 }}
                 placeholder="Post Title goes here"
                 fullWidth
                 margin="normal"
@@ -99,7 +100,7 @@ const Profile = () => {
               </TextField>
                 <TextField
                   id="outlined-full-width"
-                  style={{ margin: 8 }}
+                  style={{ margin: 0 }}
                   placeholder="Post Body goes here"
                   fullWidth
                   margin="normal"
@@ -110,7 +111,7 @@ const Profile = () => {
                 </TextField>
                   <TextField
                     id="outlined-full-width"
-                    style={{ margin: 8 }}
+                    style={{ margin: 0 }}
                     placeholder="Post Author goes here"
                     fullWidth
                     margin="normal"
@@ -121,14 +122,14 @@ const Profile = () => {
                   </TextField>
             </Paper>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={0}>
             <Paper 
             className={classes.posts}
             elevation={3}
               variant="outlined">
             <TextField 
               id="outlined-full-width"
-              style={{ margin: 8 }}
+              style={{ margin: 0 }}
               placeholder="Post Title goes here"
               fullWidth
               margin="normal"
@@ -140,7 +141,7 @@ const Profile = () => {
               </TextField>
                 <TextField
                   id="outlined-full-width"
-                  style={{ margin: 8 }}
+                  style={{ margin: 0 }}
                   placeholder="Post Body goes here"
                   fullWidth
                   margin="normal"
@@ -151,7 +152,7 @@ const Profile = () => {
                 </TextField>
                   <TextField
                     id="outlined-full-width"
-                    style={{ margin: 8 }}
+                    style={{ margin: 0 }}
                     placeholder="Post Author goes here"
                     fullWidth
                     margin="normal"

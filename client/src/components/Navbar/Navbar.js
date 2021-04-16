@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: 'none',
     color: theme.palette.secondary.main
+  },
+  AppBar: {
+    marginBottom: 4
   }
 }))
 
@@ -27,7 +30,7 @@ const Navbar = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar className={classes.AppBar} position="static">
         <Toolbar variant='dense'>
           <img className='Logo' alt='logo' src= '/images/birdBook2.png'/>
           {/* <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='menu'>
