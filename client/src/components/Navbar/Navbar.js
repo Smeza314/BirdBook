@@ -106,6 +106,7 @@ const Navbar = (props) => {
               keepMounted: true, // Better open performance on mobile.
             }}
           >
+            {/* THis is where the sidebar component is added */}
             <Sidebar />
           </Drawer>
         </Hidden>
@@ -117,6 +118,7 @@ const Navbar = (props) => {
             variant="permanent"
             open
           >
+            {/* THis is where the sidebar component is added */}
             <Sidebar />
           </Drawer>
         </Hidden>
