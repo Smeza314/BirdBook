@@ -5,6 +5,9 @@ import {
 } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
+
+
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
@@ -29,7 +32,20 @@ const theme = createMuiTheme({
   },
 })
 
+const useStyles = makeStyles((theme) => ({
+  content: {
+    flexGrow: 1,
+    marginLeft: 0,
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: 240,
+    },
+  }
+}))
+
 const App = () => {
+  
+  const classes = useStyles();
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
@@ -37,20 +53,26 @@ const App = () => {
           <Navbar/>
           <Switch>
             <Route exact path='/'>
-              <Home />
+              <div className={classes.content}>
+                <Home />
+              </div>
             </Route>
             <Route path='/login'>
               <Login />
             </Route>
             <Route path='/profile'>
-              <Profile />
+              <div className={classes.content}>
+                <Profile />
+              </div>
             </Route>
             <Route path='/message'>
-              <Message />
+              <div className={classes.content}>
+                <Message />
+              </div>
             </Route>
           </Switch>
         </div>
-      <Footer></Footer>
+      <Footer />
       </Router>
     </ThemeProvider>
   )
