@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     width: '200px'
   },
   header: {
-    height: '500px', 
+    height: '100%', 
     width: '100%'
   },
 
