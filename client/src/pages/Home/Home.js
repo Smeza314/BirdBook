@@ -12,9 +12,9 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   return (
-    <Container >
+    // <Container className={classes.content}>
       <h1>This is the home page</h1>
-    </Container>
+    // </Container>
   )
 }
 

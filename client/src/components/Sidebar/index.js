@@ -1,8 +1,1 @@
-const Sidebar = () => {
-  return (
-    <>
-    </>
-  )
-}
-
-export default Sidebar
+export { default } from './Sidebar.js'
