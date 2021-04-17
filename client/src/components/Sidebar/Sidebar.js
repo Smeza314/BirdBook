@@ -111,7 +111,7 @@ const friendlist = [
   }
 ]
 
-const Sidebar = () => {
+const Sidebar = ({ handleDrawerToggle }) => {
 
   const classes = useStyles()
   const theme = useTheme()
@@ -154,7 +154,10 @@ const Sidebar = () => {
                     <Avatar alt={msg.username} src={msg.photo} />
                   </ListItemAvatar>
                   <Link component={RouterLink} to="/message">
-                    <ListItemText primary={msg.username} />
+                    <ListItemText 
+                    primary={msg.username} 
+                    onClick={handleDrawerToggle}
+                    />
                   </Link>
                 </ListItem>
                 <Divider />
@@ -173,7 +176,10 @@ const Sidebar = () => {
                       <Avatar alt={friend.username} src={friend.photo} />
                     </ListItemAvatar>
                     <Link component={RouterLink} to="/message">
-                      <ListItemText primary={friend.username} />
+                      <ListItemText 
+                      primary={friend.username}
+                      onClick={handleDrawerToggle}
+                    />
                     </Link>
                   </ListItem>
                   <Divider />

@@ -107,7 +107,7 @@ const Navbar = (props) => {
             }}
           >
             {/* THis is where the sidebar component is added */}
-            <Sidebar />
+            <Sidebar handleDrawerToggle={handleDrawerToggle}/>
           </Drawer>
         </Hidden>
         <Hidden xsDown implementation="css">
