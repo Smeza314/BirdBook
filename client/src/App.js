@@ -1,7 +1,8 @@
 import {
   BrowserRouter as Router,
   Route,
-  Switch
+  Switch,
+  Redirect
 } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
@@ -15,6 +16,7 @@ import Message from './pages/Message'
 import Navbar from './components/Navbar'
 import Footer from './components/stickyFooter'
 import { Fragment } from 'react'
+
 
 const theme = createMuiTheme({
   palette: {
@@ -33,6 +35,19 @@ const theme = createMuiTheme({
   },
 })
 
+function PrivateRoute({ children, ...rest }) {
+  return (
+    <Route { ...rest } render={({ location }) => {
+      return (localStorage.getItem('user'))
+        ? children
+        : <Redirect to={{
+          pathname: '/login',
+          state: { from: location }
+        }}
+/>
+    }} />
+  )
+}
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
@@ -57,21 +72,21 @@ const App = () => {
             </Route>
             <Fragment>
               <Navbar />
-              <Route exact path='/'>
+              <PrivateRoute exact path='/'>
                 <div className={classes.content}>
                   <Home />
                 </div>
-              </Route>
-              <Route path='/profile'>
+              </PrivateRoute>
+              <PrivateRoute path='/profile'>
                 <div className={classes.content}>
                   <Profile />
                 </div>
-              </Route>
-              <Route path='/message'>
+              </PrivateRoute>
+              <PrivateRoute path='/message'>
                 <div className={classes.content}>
                   <Message />
                 </div>
-              </Route>
+              </PrivateRoute>
               <Footer />
             </Fragment>
           </Switch>
