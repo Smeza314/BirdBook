@@ -15,6 +15,8 @@ import Message from './pages/Message'
 import Navbar from './components/Navbar'
 import Footer from './components/stickyFooter'
 
+import { Fragment } from 'react'
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -50,29 +52,31 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Router>
         <div>
-          <Navbar/>
           <Switch>
-            <Route exact path='/'>
-              <div className={classes.content}>
-                <Home />
-              </div>
-            </Route>
             <Route path='/login'>
               <Login />
             </Route>
-            <Route path='/profile'>
-              <div className={classes.content}>
-                <Profile />
-              </div>
-            </Route>
-            <Route path='/message'>
-              <div className={classes.content}>
-                <Message />
-              </div>
-            </Route>
+            <Fragment> 
+              <Navbar />
+              <Route exact path='/'>
+                <div className={classes.content}>
+                  <Home />
+                </div>
+              </Route>
+              <Route path='/profile'>
+                <div className={classes.content}>
+                  <Profile />
+                </div>
+              </Route>
+              <Route path='/message'>
+                <div className={classes.content}>
+                  <Message />
+                </div>
+              </Route>
+              <Footer />
+            </Fragment>
           </Switch>
         </div>
-      <Footer />
       </Router>
     </ThemeProvider>
   )
