@@ -50,6 +50,10 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
 }))
 
+const handleLogOut = event => {
+  localStorage.removeItem('user')
+}
+
 
 const Navbar = (props) => {
 
@@ -85,7 +89,7 @@ const Navbar = (props) => {
           </Link>
           </Typography>
           <Link to='/login' className={classes.link}>
-            <Button color='inherit'>Sign Out</Button>
+            <Button onClick={handleLogOut} color='inherit'>Sign Out</Button>
           </Link>
         </Toolbar>
       </AppBar>

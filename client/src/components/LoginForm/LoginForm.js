@@ -6,6 +6,8 @@ import TextField from '@material-ui/core/TextField';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import User from '../../utils/User'
+import { useState } from 'react'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +32,28 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginForm = () => {
   const classes = useStyles();
+  const [loginState, setLoginState] = useState({
+    username: '',
+    password: ''
+  })
+
+  const handleInputChange = ({ target }) => {
+    setLoginState({ ...loginState, [target.name]: target.value })
+  }
+
+  const handleLogin = event => {
+    event.preventDefault()
+    User.login({
+      username: loginState.username,
+      password: loginState.password
+    })
+      .then(({ data }) => {
+        localStorage.setItem('user', data)
+        window.location = '/'
+      })
+      .catch(err => console.error(err))
+  }
+
   return (
 
     <>
@@ -41,7 +65,7 @@ const LoginForm = () => {
               <Typography component="h1" variant="h5">
         Sign in
         </Typography>
-              <form className={classes.form} noValidate>
+              <form onSubmit={handleLogin} className={classes.form} noValidate>
                 <TextField
                   variant="outlined"
                   margin="normal"
@@ -50,6 +74,8 @@ const LoginForm = () => {
                   id="username"
                   label="Username"
                   name="username"
+                  value={loginState.username}
+                  onChange={handleInputChange}
                   autoComplete="username"
                   autoFocus
                 />
@@ -62,9 +88,11 @@ const LoginForm = () => {
                   label="Password"
                   type="password"
                   id="password"
+                  value={loginState.password}
+                  onChange={handleInputChange}
                   autoComplete="current-password"
                 />
-                <Button
+                <Button onClick={handleLogin}
                   type="submit"
                   fullWidth
                   variant="contained"
