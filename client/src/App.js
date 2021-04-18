@@ -18,9 +18,6 @@ import Navbar from './components/Navbar'
 import Footer from './components/stickyFooter'
 import { Fragment } from 'react'
 
-
-import { Fragment } from 'react'
-
 const theme = createMuiTheme({
   palette: {
     primary: {
