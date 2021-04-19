@@ -1,10 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-=======
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
@@ -13,7 +7,6 @@ import { Divider } from '@material-ui/core'
 import { useState, useEffect } from 'react'
 import User from '../../utils/User'
 import Post from '../../components/Post'
->>>>>>> 45f74b8cd67456f0616fa41366f833e4465efbbc
 
 const useStyles = makeStyles((theme) => ({
   root: {
