@@ -1,17 +1,12 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import { borders } from '@material-ui/system';
-import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+
+import { Divider } from '@material-ui/core'
+import { useState, useEffect } from 'react'
+import User from '../../utils/User'
+import Post from '../../components/Post'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,18 +45,25 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-// const useStyles = makeStyles({
-//   root: {
-//     maxWidth: 345,
-//   },
-//   media: {
-//     height: 140,
-//   },
-// });
-
-
 const Profile = () => {
-  const classes = useStyles();
+  const classes = useStyles()
+
+  const [userState, setUserState] = useState({
+    user: {
+      posts: []
+    }
+  })
+
+
+  useEffect(() => {
+    User.info()
+      .then(({ data: user }) => {
+        const newUser = user
+        setUserState({ ...userState, user: newUser })
+      })
+      .catch(err => console.log(err))
+  }, [])
+
   return (
     <>
       <div className={classes.root}>
@@ -70,102 +72,34 @@ const Profile = () => {
           justify="space-evenly"
           alignItems="center" >
           <Grid item xs={8}>
-            {/* <Paper className={classes.paper}> */}
               <img
               className={classes.header} 
                 src="https://cdn.discordapp.com/attachments/818908729029689351/831993325774962718/wp6053464.jpg" alt=""/>
-            {/* </Paper> */}
           </Grid>
-          <Grid item xs={8}>
-            <Paper className={classes.paper2}>
-              <h1>Your Posts</h1>
-            </Paper>
+        </Grid>
+        <Grid container
+          className={classes.feedContainer}
+          spacing={1}
+          justify="center"
+          xs={12}
+        >
+          <Grid item xs={9}>
+              <Typography variant="h4" gutterBottom>
+                Your Posts
+              </Typography>
+            <Divider />
           </Grid>
-          <Grid item xs={8}>
-            <Paper 
-            className={classes.posts}
-            elevation={3}
-              variant="outlined" >
-              <TextField
-                id="outlined-full-width"
-                style={{ margin: 0 }}
-                placeholder="Post Title goes here"
-                fullWidth
-                margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="outlined">
-
-              </TextField>
-                <TextField
-                  id="outlined-full-width"
-                  style={{ margin: 0 }}
-                  placeholder="Post Body goes here"
-                  fullWidth
-                  margin="normal"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="outlined">
-                </TextField>
-                  <TextField
-                    id="outlined-full-width"
-                    style={{ margin: 0 }}
-                    placeholder="Post Author goes here"
-                    fullWidth
-                    margin="normal"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    variant="outlined">
-                  </TextField>
-            </Paper>
-          </Grid>
-          <Grid item xs={0}>
-            <Paper 
-            className={classes.posts}
-            elevation={3}
-              variant="outlined">
-            <TextField 
-              id="outlined-full-width"
-              style={{ margin: 0 }}
-              placeholder="Post Title goes here"
-              fullWidth
-              margin="normal"
-              InputLabelProps={{  
-                shrink: true,
-              }}
-              variant="outlined">
-              
-              </TextField>
-                <TextField
-                  id="outlined-full-width"
-                  style={{ margin: 0 }}
-                  placeholder="Post Body goes here"
-                  fullWidth
-                  margin="normal"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="outlined">
-                </TextField>
-                  <TextField
-                    id="outlined-full-width"
-                    style={{ margin: 0 }}
-                    placeholder="Post Author goes here"
-                    fullWidth
-                    margin="normal"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    variant="outlined">
-                  </TextField>
-            </Paper>
-          </Grid>
-          <Grid item xs={2}>
-            <Paper className={classes.paper}>14</Paper>
-          </Grid>
+          {
+            userState.user.posts.length
+              ? userState.user.posts.slice(0).reverse().map(post => (
+                <Post
+                  username={post.author.username}
+                  content={post.post_content}
+                  userImg={'./images/birdBook.png'}
+                />
+              ))
+              : null
+          }
         </Grid>
       </div>
     </>

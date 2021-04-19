@@ -48,9 +48,10 @@ const Home = () => {
       post_content: postState.text
     }
     PostAPI.createPost(newPost)
-      .then(({ data }) => {
-        setPostState({ ...postState, text: ''})
-        console.log(data)
+      .then(({ data: post }) => {
+        const posts = [...postState.posts]
+        posts.push(post)
+        setPostState({ ...postState, posts, text: ''})
       }) 
       .catch(err => console.log(err))
   }
@@ -134,7 +135,7 @@ const Home = () => {
       </Grid>
       {
         postState.posts.length 
-          ? postState.posts.map(post => (
+          ? postState.posts.slice(0).reverse().map(post => (
             <Post 
               username={post.author.username} 
               content={post.post_content}
