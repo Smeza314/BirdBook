@@ -57,8 +57,9 @@ const Home = () => {
 
   useEffect(() => {
     PostAPI.getPosts()
-      .then(({ data }) => {
-        console.log(data)
+      .then(({ data: posts }) => {
+        setPostState({ ...postState, posts })
+        // console.log(postState.posts)
       })
       .catch(err => console.log(err))
   }, [])
@@ -131,76 +132,17 @@ const Home = () => {
         </Typography>
         <Divider />
       </Grid>
-      <Post />
-      {/* <Grid item xs={9}>
-        <Paper className={classes.paper} variant="outlined">
-          <Box display="flex" alignItems="center" className={classes.Userprofile} >
-            <Avatar src='./images/birdBook.png' alt='User' className={classes.large} />
-            <Typography variant="h6">Username</Typography>
-          </Box>
-          <Typography variant="body1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad sequi suscipit, accusantium tenetur, culpa cupiditate labore porro itaque quia omnis facere eos molestias aliquam nam quasi libero perspiciatis. Architecto, maxime!
-          Recusandae reiciendis sequi similique velit libero nulla molestias quos, pariatur facere placeat a dicta. Fuga distinctio, recusandae, repellat sapiente placeat reiciendis maiores aspernatur adipisci vel reprehenderit doloribus, totam consectetur pariatur?</Typography>
-          <Typography variant="caption text">
-            <Link>
-              <ThumbUpIcon 
-              style={{ fontSize: 14 }} 
-              onClick={handleLikes} 
-              className={classes.likeLink} />
-            </Link>
-            <Link onClick={handleCommentSection} className={classes.commentLink} >
-              Comments
-            </Link>
-          </Typography>
-          {open ? (
-            <Box>
-              <Divider />
-              <Typography variant="h6">Comments:</Typography>
-              <Box display="flex" alignItems="center" className={classes.Userprofile} >
-                <Avatar src='./images/birdBook.png' alt='User' className={classes.small} />
-                <Typography variant="subtitle2" >Username</Typography>
-              </Box>
-              <Typography variant="body2">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellendus aspernatur voluptates eum id, distinctio magni aut sit et dignissimos placeat possimus adipisci illo nostrum iste deserunt velit tempora officia voluptatem!</Typography>
-              <Divider />
-              <Box display="flex" alignItems="center" className={classes.Userprofile} >
-                <Avatar src='./images/birdBook.png' alt='User' className={classes.small} />
-                <Typography variant="subtitle2" >Username</Typography>
-              </Box>
-              <Typography variant="body2">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellendus aspernatur voluptates eum id, distinctio magni aut sit et dignissimos placeat possimus adipisci illo nostrum iste deserunt velit tempora officia voluptatem!</Typography>
-              <Divider />
-              <Box display="flex" alignItems="center" className={classes.Userprofile} >
-                <Avatar src='./images/birdBook.png' alt='User' className={classes.small} />
-                <Typography variant="subtitle2" >Username</Typography>
-              </Box>
-              <Typography variant="body2">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellendus aspernatur voluptates eum id, distinctio magni aut sit et dignissimos placeat possimus adipisci illo nostrum iste deserunt velit tempora officia voluptatem!</Typography>
-              <Divider />
-              <TextField
-                id="commentText"
-                label="Write a reply"
-                multiline
-                rows={2}
-                variant="outlined"
-                fullWidth
-                style={{ marginTop: 15 }}
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.postButtons}
-                size="small"
-              >Submit</Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.postButtons}
-                size="small"
-                fullWidth
-                onClick={handleCommentSection}
-              >Close Comments</Button>
-            </Box>
-          ) : null}
-          
-        </Paper>
-      </Grid> */}
+      {
+        postState.posts.length 
+          ? postState.posts.map(post => (
+            <Post 
+              username={post.author.username} 
+              content={post.post_content}
+              userImg={'./images/birdBook.png'}
+            />
+          ))
+          : null
+      }
     </Grid>
   )
 }

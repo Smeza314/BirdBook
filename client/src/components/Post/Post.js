@@ -44,15 +44,15 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const Post = () => {
+const Post = ({ username, content, userImg}) => {
 
-  const postData = {
-    userPostImg: './images/birdBook.png',
-    postUsername: 'Username',
-    postText: `
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad sequi suscipit, accusantium tenetur, culpa cupiditate labore porro itaque quia omnis facere eos molestias aliquam nam quasi libero perspiciatis. Architecto, maxime!
-          Recusandae reiciendis sequi similique velit libero nulla molestias quos, pariatur facere placeat a dicta. Fuga distinctio, recusandae, repellat sapiente placeat reiciendis maiores aspernatur adipisci vel reprehenderit doloribus, totam consectetur pariatur?`
-  }
+  // const postData = {
+  //   userPostImg: './images/birdBook.png',
+  //   postUsername: 'Username',
+  //   postText: `
+  //         Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad sequi suscipit, accusantium tenetur, culpa cupiditate labore porro itaque quia omnis facere eos molestias aliquam nam quasi libero perspiciatis. Architecto, maxime!
+  //         Recusandae reiciendis sequi similique velit libero nulla molestias quos, pariatur facere placeat a dicta. Fuga distinctio, recusandae, repellat sapiente placeat reiciendis maiores aspernatur adipisci vel reprehenderit doloribus, totam consectetur pariatur?`
+  // }
 
 
 
@@ -73,10 +73,10 @@ const Post = () => {
     <Grid item xs={9}>
       <Paper className={classes.paper} variant="outlined">
         <Box display="flex" alignItems="center" className={classes.Userprofile} >
-          <Avatar src={postData.userPostImg} alt='User' className={classes.large} />
-          <Typography variant="h6">{postData.postUsername}</Typography>
+          <Avatar src={userImg} alt='User' className={classes.large} />
+          <Typography variant="h6">{username}</Typography>
         </Box>
-        <Typography variant="body1">{postData.postText}</Typography>
+        <Typography variant="body1">{content}</Typography>
         <Typography variant="caption text">
           <Link>
             <ThumbUpIcon
