@@ -1,7 +1,6 @@
 const { model, Schema } = require('mongoose')
 
 const Post = new Schema({
-  post_title: String,
   post_content: String, 
   author: {
     type: Schema.Types.ObjectId,
