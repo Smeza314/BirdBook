@@ -134,7 +134,7 @@ const Home = () => {
         <Divider />
       </Grid>
       {
-        postState.posts.length 
+        postState.posts > 0 
           ? postState.posts.slice(0).reverse().map(post => (
             <Post 
               username={post.author.username} 
