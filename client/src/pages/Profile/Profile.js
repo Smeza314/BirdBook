@@ -90,7 +90,7 @@ const Profile = () => {
             <Divider />
           </Grid>
           {
-            userState.user.posts > 0
+            userState.user.posts.length > 0
               ? userState.user.posts.slice(0).reverse().map(post => (
                 <Post
                   username={post.author.username}
