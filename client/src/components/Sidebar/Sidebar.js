@@ -147,8 +147,8 @@ const Sidebar = ({ handleDrawerToggle }) => {
         <TabPanel value={value} index={0} dir={theme.direction} disablePadding>
           <List className={classes.messageList} >
             {
-              messagelist.map((msg) => 
-                <>
+              messagelist.map((msg, i) => 
+                <span key={i}>
                 <ListItem alignItems="center">
                   <ListItemAvatar>
                     <Avatar alt={msg.username} src={msg.photo} />
@@ -161,7 +161,7 @@ const Sidebar = ({ handleDrawerToggle }) => {
                   </Link>
                 </ListItem>
                 <Divider />
-                </>
+                </span>
               )
             }
           </List>
@@ -169,8 +169,9 @@ const Sidebar = ({ handleDrawerToggle }) => {
         <TabPanel value={value} index={1} dir={theme.direction}>
           <List className={classes.messageList} >
             {
-              friendlist.map((friend) =>
-                <>
+              friendlist.map((friend, i) =>
+                <span key={i}>
+
                   <ListItem alignItems="center">
                     <ListItemAvatar>
                       <Avatar alt={friend.username} src={friend.photo} />
@@ -179,11 +180,11 @@ const Sidebar = ({ handleDrawerToggle }) => {
                       <ListItemText 
                       primary={friend.username}
                       onClick={handleDrawerToggle}
-                    />
+                      />
                     </Link>
                   </ListItem>
                   <Divider />
-                </>
+                  </span>
               )
             }
           </List>

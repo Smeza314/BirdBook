@@ -11,6 +11,8 @@ import Hidden from '@material-ui/core/Hidden'
 import { Link } from 'react-router-dom'
 import '../../App.css'
 import Sidebar from '../Sidebar'
+import { useEffect } from "react";
+import User from "../../utils/User";
 
 const drawerWidth = 240;
 
@@ -62,10 +64,20 @@ const Navbar = (props) => {
   const theme = useTheme()
   const container = window !== undefined ? () => window().document.body : undefined
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [user, setUser] = useState({
+    id: ""
+  })
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
   }
-  
+ useEffect(() =>{
+  User.info()
+  .then(({data}) => {
+    console.log(data)
+    setUser({...user, id:data._id})
+  })
+  .catch(err => console.log(err)) 
+ },[]) 
   return (
     <div className={classes.root}>
       <AppBar position="sticky" className={classes.appBar}>
@@ -84,7 +96,7 @@ const Navbar = (props) => {
           <Link to='/' className={classes.link}>
             <Button color='inherit'>Feed</Button>
           </Link>
-          <Link to='/profile' className={classes.link}>
+          <Link to={`/profile/${user.id}`} className={classes.link} >
             <Button color='inherit'>Profile</Button>
           </Link>
           </Typography>
