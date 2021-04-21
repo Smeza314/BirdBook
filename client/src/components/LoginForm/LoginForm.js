@@ -51,7 +51,6 @@ const LoginForm = () => {
       localStorage.setItem('username', loginState.username)
       localStorage.setItem('password', loginState.password)
 
-      window.location.reload()
     } catch (error) {
 
     }

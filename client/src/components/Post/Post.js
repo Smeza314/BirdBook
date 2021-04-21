@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const Post = ({ username, content, userImg}) => {
+const Post = ({ username, content, userImg }) => {
 
   // Example Post Data:
   // const postData = {

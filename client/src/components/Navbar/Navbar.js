@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const handleLogOut = event => {
-  localStorage.removeItem('user')
+  localStorage.removeItem('username', 'password', 'user')
 }
 
 
