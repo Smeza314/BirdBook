@@ -138,6 +138,7 @@ const Home = () => {
           ? postState.posts.slice(0).reverse().map(post => (
             <Post 
               username={post.author.username} 
+              id={post._id}
               content={post.post_content}
               userImg={'./images/birdBook.png'}
             />

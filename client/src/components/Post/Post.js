@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const Post = ({ username, content, userImg}) => {
+const Post = ({ username, content, userImg, id}) => {
 
   // Example Post Data:
   // const postData = {
@@ -73,10 +73,12 @@ const Post = ({ username, content, userImg}) => {
   return(
     <Grid item xs={9}>
       <Paper className={classes.paper} variant="outlined">
+        <Link className={classes.likeLink} onClick={() => window.location = `/profile/${id}`}>
         <Box display="flex" alignItems="center" className={classes.Userprofile} >
           <Avatar src={userImg} alt='User' className={classes.large} />
           <Typography variant="h6">{username}</Typography>
         </Box>
+        </Link>
         <Typography variant="body1">{content}</Typography>
         <Typography variant="caption text">
           <Link>
