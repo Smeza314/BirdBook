@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useState } from 'react'
 import User from '../../utils/User'
+import axios from 'axios';
 
 
 
@@ -47,6 +48,7 @@ const RegisterForm = () => {
 
   const handleRegister = event => {
     event.preventDefault()
+
     User.register({
       name: loginState.name,
       email: loginState.email,
@@ -54,8 +56,34 @@ const RegisterForm = () => {
       password: loginState.password
     })
       .then(() => {
-        alert('User registered!')
-        setLoginState({ ...loginState, name: '', email: '', username: '', password: '' })
+        axios.post('https://api.chatengine.io/users/', {
+          username: loginState.username,
+          secret: loginState.password
+        }, {
+          headers: {
+            'PRIVATE-KEY': '8816c2ea-a6c0-43fc-8d56-602fc5f8e515'
+          }
+        })
+          .then(() => {
+            alert('User registered!')
+            setLoginState({ ...loginState, name: '', email: '', username: '', password: '' })
+          })
+          .catch(err => { 
+            console.error(err)
+            axios.post('https://api.chatengine.io/users', {
+              username: loginState.username,
+              secret: loginState.password
+            }, {
+              headers: {
+                'PRIVATE-KEY': '8816c2ea-a6c0-43fc-8d56-602fc5f8e515'
+              }
+            })
+              .then(() => {
+                alert('User registered!')
+                setLoginState({ ...loginState, name: '', email: '', username: '', password: '' })
+              })
+              .catch(err => console.error(err))
+          })
       })
       .catch(err => console.error(err))
   }
