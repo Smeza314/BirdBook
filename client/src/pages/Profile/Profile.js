@@ -94,7 +94,7 @@ const Profile = () => {
             <Button onClick={() => console.log(userState)}>Click </Button>
           </Grid>
           {
-            userState.user.posts.length
+            userState.user.posts.length > 0
               ? userState.user.posts.slice(0).reverse().map(post => (
                 <Post
                   post={post}

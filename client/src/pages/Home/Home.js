@@ -133,7 +133,7 @@ const Home = () => {
         <Divider />
       </Grid>
       {
-        postState.posts > 0 
+        postState.posts.length > 0 
           ? postState.posts.slice(0).reverse().map(post => (
             <Post 
               post={post}
