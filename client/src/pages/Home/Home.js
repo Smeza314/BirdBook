@@ -51,7 +51,7 @@ const Home = () => {
       .then(({ data: post }) => {
         const posts = [...postState.posts]
         posts.push(post)
-        setPostState({ ...postState, posts, text: ''})
+        setPostState({ ...postState, posts, text: '' })
       }) 
       .catch(err => console.log(err))
   }
@@ -71,7 +71,6 @@ const Home = () => {
       className={classes.feedContainer}
       spacing={1}
       justify="center"
-      xs={12}
     >
       <Grid item xs={9}>
         <Paper className={classes.paper} variant="outlined">

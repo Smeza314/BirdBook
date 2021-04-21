@@ -1,15 +1,16 @@
 import { makeStyles } from '@material-ui/core/styles'
-import Paper from '@material-ui/core/Paper'
-import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import { Divider } from '@material-ui/core'
+import ThumbUpIcon from '@material-ui/icons/ThumbUp'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Avatar from '@material-ui/core/Avatar'
-import Box from '@material-ui/core/Box'
-import ThumbUpIcon from '@material-ui/icons/ThumbUp'
+import Paper from '@material-ui/core/Paper'
+import { Divider } from '@material-ui/core'
+import Grid from '@material-ui/core/Grid'
 import Link from '@material-ui/core/Link'
-import { useState } from 'react'
+import Box from '@material-ui/core/Box'
+import { useState, useEffect } from 'react'
+import Comment from '../../utils/CommentAPI'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -61,10 +62,31 @@ const Post = ({ username, content, userImg, id}) => {
   //         Recusandae reiciendis sequi similique velit libero nulla molestias quos, pariatur facere placeat a dicta. Fuga distinctio, recusandae, repellat sapiente placeat reiciendis maiores aspernatur adipisci vel reprehenderit doloribus, totam consectetur pariatur?`
   // }
 
-
-
   const classes = useStyles()
   const [open, setOpen] = useState(false)
+
+  const [commentState, setCommentState] = useState({
+    comment_text: '',
+    comments: []
+  })
+
+  const handleInputChange = ({ target }) => {
+    setCommentState({ ...commentState, [target.name]: target.value })
+  }
+
+  const handleCreateComment= event => {
+    event.preventDefault()
+    let newComment = {
+      comment_text: commentState.comment_text
+    }
+    Comment.createComment(newComment, post._id)
+      .then(({ data: comment }) => {
+        let comments = [...commentState.comments]
+        comments.push(comment)
+        setCommentState({ ...commentState, comments, comment_text: '' })
+      })
+      .catch(err => console.log(err))
+  }
 
   const handleCommentSection = event => {
     event.preventDefault()
@@ -87,11 +109,10 @@ const Post = ({ username, content, userImg, id}) => {
         <Link className={classes.profileLink} onClick={handleProfileLink}>
         <Box display="flex" alignItems="center" className={classes.Userprofile} >
           <Avatar src={userImg} alt='User' className={classes.large} />
-          <Typography variant="h6">{username}</Typography>
+          <Typography variant="h6">{post.author.username}</Typography>
         </Box>
-        </Link>
-        <Typography variant="body1">{content}</Typography>
-        <Typography variant="caption text">
+        <Typography variant="body1">{post.post_content}</Typography>
+        <Typography variant="body2">
           <Link>
             <ThumbUpIcon
               style={{ fontSize: 14 }}
@@ -106,35 +127,49 @@ const Post = ({ username, content, userImg, id}) => {
           <Box>
             <Divider />
             <Typography variant="h6">Comments:</Typography>
-            <Box 
-              display="flex" 
-              alignItems="center" 
-              className={classes.Userprofile} 
-            >
-              <Avatar 
-                src='./images/birdBook.png' 
-                alt='User' 
-                className={classes.small} 
+            {
+              commentState.comments.length
+              ? commentState.comments.map(comment => (
+                <>
+                <Box 
+                  display="flex" 
+                  alignItems="center" 
+                  className={classes.Userprofile} 
+                >
+                  <Avatar 
+                  src='./images/birdBook.png' 
+                  alt='User' 
+                  className={classes.small} 
+                  />
+                  <Typography variant="subtitle2" >{comment.author.username}</Typography>
+                </Box>
+                <Typography variant="body2">{comment.comment_text}</Typography>
+                <Divider />
+                </>
+              ))
+              :null
+            }
+            
+            <form onSubmit={handleCreateComment}>
+              <TextField
+                name="comment_text"
+                label="Write a reply"
+                multiline
+                rows={2}
+                variant="outlined"
+                fullWidth
+                style={{ marginTop: 15 }}
+                value={commentState.comment_text}
+                onChange={handleInputChange}
               />
-              <Typography variant="subtitle2" >Username</Typography>
-            </Box>
-            <Typography variant="body2">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellendus aspernatur voluptates eum id, distinctio magni aut sit et dignissimos placeat possimus adipisci illo nostrum iste deserunt velit tempora officia voluptatem!</Typography>
-            <Divider />
-            <TextField
-              id="commentText"
-              label="Write a reply"
-              multiline
-              rows={2}
-              variant="outlined"
-              fullWidth
-              style={{ marginTop: 15 }}
-            />
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.postButtons}
-              size="small"
-            >Submit</Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.postButtons}
+                size="small"
+                onClick={handleCreateComment}
+              >Submit</Button>
+            </form>
             <Button
               variant="contained"
               color="primary"

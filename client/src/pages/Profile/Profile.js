@@ -8,6 +8,9 @@ import { useState, useEffect } from 'react'
 import User from '../../utils/User'
 import Post from '../../components/Post'
 
+import Button from '@material-ui/core/Button'
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -71,7 +74,7 @@ const Profile = () => {
           direction="column"
           justify="space-evenly"
           alignItems="center" >
-          <Grid item xs={8}>
+          <Grid item xs={9}>
               <img
               className={classes.header} 
                 src="https://cdn.discordapp.com/attachments/818908729029689351/831993325774962718/wp6053464.jpg" alt=""/>
@@ -88,13 +91,13 @@ const Profile = () => {
                 Your Posts
               </Typography>
             <Divider />
+            <Button onClick={() => console.log(userState)}>Click </Button>
           </Grid>
           {
             userState.user.posts.length > 0
               ? userState.user.posts.slice(0).reverse().map(post => (
                 <Post
-                  username={post.author.username}
-                  content={post.post_content}
+                  post={post}
                   userImg={'./images/birdBook.png'}
                 />
               ))
