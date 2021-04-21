@@ -39,7 +39,13 @@ const useStyles = makeStyles((theme) => ({
   likeLink: {
     '&:hover': {
       cursor: 'pointer'
-    }
+    },
+  },
+  profileLink: {
+    '&:hover': {
+      cursor: 'pointer'
+    },
+    color: 'black'
   }
 }))
 
@@ -70,10 +76,15 @@ const Post = ({ username, content, userImg, id}) => {
     console.log('hi')
   }
 
+  const handleProfileLink = () => {
+    localStorage.setItem('profile', id)
+    window.location = `/profile/${id}`
+  }
+
   return(
     <Grid item xs={9}>
       <Paper className={classes.paper} variant="outlined">
-        <Link className={classes.likeLink} onClick={() => window.location = `/profile/${id}`}>
+        <Link className={classes.profileLink} onClick={handleProfileLink}>
         <Box display="flex" alignItems="center" className={classes.Userprofile} >
           <Avatar src={userImg} alt='User' className={classes.large} />
           <Typography variant="h6">{username}</Typography>
