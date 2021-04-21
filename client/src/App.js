@@ -38,7 +38,7 @@ const theme = createMuiTheme({
 function PrivateRoute({ children, ...rest }) {
   return (
     <Route { ...rest } render={({ location }) => {
-      return (localStorage.getItem('user'))
+      return (localStorage.getItem('user') !== 'null' && localStorage.getItem('user') !== null)
         ? children
         : <Redirect to={{
           pathname: '/login',
