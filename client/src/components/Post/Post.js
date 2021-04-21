@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const Post = ({ username, content, userImg, id}) => {
+const Post = ({ userImg, post }) => {
 
   // Example Post Data:
   // const postData = {
@@ -99,8 +99,8 @@ const Post = ({ username, content, userImg, id}) => {
   }
 
   const handleProfileLink = () => {
-    localStorage.setItem('profile', id)
-    window.location = `/profile/${id}`
+    localStorage.setItem('profile', post.author._id)
+    window.location = `/profile/${post.author._id}`
   }
 
   return(
@@ -111,6 +111,7 @@ const Post = ({ username, content, userImg, id}) => {
           <Avatar src={userImg} alt='User' className={classes.large} />
           <Typography variant="h6">{post.author.username}</Typography>
         </Box>
+        </Link>
         <Typography variant="body1">{post.post_content}</Typography>
         <Typography variant="body2">
           <Link>

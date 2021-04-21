@@ -136,9 +136,7 @@ const Home = () => {
         postState.posts.length > 0 
           ? postState.posts.slice(0).reverse().map(post => (
             <Post 
-              username={post.author.username} 
-              id={post._id}
-              content={post.post_content}
+              post={post}
               userImg={'./images/birdBook.png'}
             />
           ))
