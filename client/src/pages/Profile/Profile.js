@@ -1,12 +1,13 @@
-import React from 'react';
 import { makeStyles } from '@material-ui/core/styles'
-import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-
-import { Divider } from '@material-ui/core'
+import Button from '@material-ui/core/Button'
+import Divider from '@material-ui/core/Divider'
+import Grid from '@material-ui/core/Grid'
 import { useState, useEffect } from 'react'
-import User from '../../utils/User'
+import PostAPI from '../../utils/PostAPI'
 import Post from '../../components/Post'
+import User from '../../utils/User'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,12 +36,16 @@ const useStyles = makeStyles((theme) => ({
     width: '100%'
   },
 
-   paper2: {
+  paper2: {
     padding: theme.spacing(1),
     textAlign: 'center',
     color: theme.palette.text.secondary,
     marginTop: 4,
     marginBottom: 4
+  },
+  feedContainer: {
+    marginTop: 15,
+    maxWidth: '100%'
   },
   
 }));
@@ -49,9 +54,13 @@ const Profile = () => {
   const classes = useStyles()
 
   const [userState, setUserState] = useState({
-    user: {
-      posts: []
-    }
+    user: {},
+  })
+  const [profileState, setProfileState] = useState({
+    profile: {},
+  })
+  const [postState, setPostState] = useState({
+    posts: []
   })
 
 
@@ -59,7 +68,17 @@ const Profile = () => {
     User.info()
       .then(({ data: user }) => {
         const newUser = user
-        setUserState({ ...userState, user: newUser })
+        setUserState({ ...userState, user: newUser })   
+      })
+      .catch(err => console.log(err))
+    PostAPI.getUserPosts(localStorage.getItem('profile'))
+      .then(({ data: posts }) => {
+        setPostState({ ...postState, posts })
+      })
+      .catch(err => console.log(err))
+    User.profileInfo(localStorage.getItem('profile'))
+      .then(({ data: profile }) => {
+        setProfileState({ ...profileState, profile })
       })
       .catch(err => console.log(err))
   }, [])
@@ -71,30 +90,58 @@ const Profile = () => {
           direction="column"
           justify="space-evenly"
           alignItems="center" >
-          <Grid item xs={8}>
+          <Grid item xs={9}>
               <img
               className={classes.header} 
                 src="https://cdn.discordapp.com/attachments/818908729029689351/831993325774962718/wp6053464.jpg" alt=""/>
           </Grid>
+          
+        </Grid>
+        <Grid contiainer 
+          justify="center"
+          className={classes.feedContainer}
+          spacing={1}
+        >
+          
         </Grid>
         <Grid container
           className={classes.feedContainer}
           spacing={1}
           justify="center"
-          xs={12}
-        >
-          <Grid item xs={9}>
-              <Typography variant="h4" gutterBottom>
-                Your Posts
-              </Typography>
-            <Divider />
-          </Grid>
+          
+        >  
+          {profileState.profile._id === userState.user._id
+            ? <>
+              <Grid item xs={9}>
+              <Button color='primary' variant='contained'>Edit Profile Picture</Button>
+              <Button color='primary'>Edit Banner Picture</Button>
+              </Grid>
+              <Grid item xs={9}>
+                <Typography variant="h4" gutterBottom>
+                  Your Posts
+                </Typography>
+                <Divider />
+              </Grid>
+              </>
+            : <>
+              <Grid item xs={9}>
+              <Button color='primary' variant='contained'>Add Friend</Button>
+              <Button color='primary'>New Message</Button>
+              </Grid>
+              <Grid item xs={9}>
+                <Typography variant="h4" gutterBottom>
+                  {profileState.profile.username}'s Posts
+                </Typography>
+                <Divider />
+              </Grid>
+              </>
+          }
           {
-            userState.user.posts.length
-              ? userState.user.posts.slice(0).reverse().map(post => (
+            postState.posts.length > 0
+              ? postState.posts.slice(0).reverse().map(post => (
                 <Post
-                  username={post.author.username}
-                  content={post.post_content}
+                  key={post._id}
+                  post={post}
                   userImg={'./images/birdBook.png'}
                 />
               ))

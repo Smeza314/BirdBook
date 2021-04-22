@@ -13,7 +13,8 @@ import Box from '@material-ui/core/Box'
 import Tab from '@material-ui/core/Tab'
 import PropTypes from 'prop-types'
 import { Link as RouterLink } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import User from '../../utils/User'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -116,10 +117,21 @@ const Sidebar = ({ handleDrawerToggle }) => {
   const classes = useStyles()
   const theme = useTheme()
   const [value, setValue] = useState(0)
+  const [userState, setUserState] = useState({
+    user: {},
+  })
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   }
+
+  useEffect(() => {
+    User.info()
+      .then(({ data: user }) => {
+        const newUser = user
+        setUserState({ ...userState, user: newUser })
+      })
+  },[])
 
   return (
     <div>
@@ -128,7 +140,7 @@ const Sidebar = ({ handleDrawerToggle }) => {
       </div>
       <Box display="flex" alignItems="center" className={classes.Userprofile} >
         <Avatar src='./images/birdBook.png' alt='User' className={classes.large} />
-        <h4>Username</h4>
+        <h4>{userState.user.username}</h4>
       </Box>
       <div className={classes.sideTab}>
       <AppBar position="static" color="default">
@@ -144,11 +156,11 @@ const Sidebar = ({ handleDrawerToggle }) => {
             <Tab label="Friends" {...a11yProps(1)} className={classes.otherTab}/>
         </Tabs>
       </AppBar>
-        <TabPanel value={value} index={0} dir={theme.direction} disablePadding>
+        <TabPanel value={value} index={0} dir={theme.direction} disablePadding={true}>
           <List className={classes.messageList} >
             {
-              messagelist.map((msg) => 
-                <>
+              messagelist.map((msg, i) => 
+                <span key={i}>
                 <ListItem alignItems="center">
                   <ListItemAvatar>
                     <Avatar alt={msg.username} src={msg.photo} />
@@ -161,7 +173,7 @@ const Sidebar = ({ handleDrawerToggle }) => {
                   </Link>
                 </ListItem>
                 <Divider />
-                </>
+                </span>
               )
             }
           </List>
@@ -169,8 +181,9 @@ const Sidebar = ({ handleDrawerToggle }) => {
         <TabPanel value={value} index={1} dir={theme.direction}>
           <List className={classes.messageList} >
             {
-              friendlist.map((friend) =>
-                <>
+              friendlist.map((friend, i) =>
+                <span key={i}>
+
                   <ListItem alignItems="center">
                     <ListItemAvatar>
                       <Avatar alt={friend.username} src={friend.photo} />
@@ -179,11 +192,11 @@ const Sidebar = ({ handleDrawerToggle }) => {
                       <ListItemText 
                       primary={friend.username}
                       onClick={handleDrawerToggle}
-                    />
+                      />
                     </Link>
                   </ListItem>
                   <Divider />
-                </>
+                  </span>
               )
             }
           </List>

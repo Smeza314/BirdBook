@@ -10,12 +10,14 @@ router.post('/users/register', (req, res) => {
     if (err) { console.log(err) }
     res.sendStatus(200)
   })
-})
+}) 
 
 // POST route that authenticate the user's login with their username and password and sends back a token if successful
 router.post('/users/login', (req, res) => {
   User.authenticate()(req.body.username, req.body.password, (err, user) => {
     if (err) { console.log(err) }
+    console.log(req.body)
+    console.log(user)
     res.json(user ? jwt.sign({ id: user._id }, process.env.SECRET) : null)
   })
 })
@@ -48,6 +50,18 @@ router.put('/users/friend/:id', passport.authenticate('jwt'), (req,res) => {
         .then(() => res.sendStatus(200) )
         .catch(err => console.log(err))
     })
+    .catch(err => console.log(err))
+
+})
+
+// GET route to get user by ID
+router.get('/users/:id', passport.authenticate('jwt'), (req, res) => {
+  User.findById(req.params.id)
+    .populate('posts')
+    .populate('comments')
+    .populate('messages')
+    .populate('friends')
+    .then((user) => res.json(user))
     .catch(err => console.log(err))
 
 })

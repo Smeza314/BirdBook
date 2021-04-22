@@ -50,17 +50,18 @@ const LoginForm = () => {
       await axios.get('https://api.chatengine.io/chats', { headers: authObject })
       localStorage.setItem('username', loginState.username)
       localStorage.setItem('password', loginState.password)
-
     } catch (error) {
-
+      
     }
 
 
+    console.log(loginState)
     User.login({
       username: loginState.username,
       password: loginState.password
     })
       .then(({ data }) => {
+        console.log(data)
         localStorage.setItem('user', data)
         window.location = '/'
       })
@@ -105,7 +106,7 @@ const LoginForm = () => {
                   onChange={handleInputChange}
                   autoComplete="current-password"
                 />
-                <Button onClick={handleLogin}
+                <Button onClick={(e) =>handleLogin(e)}
                   type="submit"
                   fullWidth
                   variant="contained"

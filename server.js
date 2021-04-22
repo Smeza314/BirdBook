@@ -29,9 +29,16 @@ passport.use(new JwtStrategy({
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.SECRET
 }, ({ id }, cb) => User.findById(id)
+  // .populate({
+  //   path: 'posts',
+  //   populate: {
+  //     path: 'author',
+  //     select: 'username'
+  //   }
+  // })
   .populate('posts')
-  .populate('comments')
-  .populate('messages')
+  .populate('comments') 
+  .populate('messages') 
   .populate('friends')
   .then(user => cb(null, user))
   .catch(err => cb(err))))
