@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const Post = ({ username, content, userImg }) => {
+const Post = ({ post, userImg }) => {
 
   // Example Post Data:
   // const postData = {
@@ -77,7 +77,7 @@ const Post = ({ username, content, userImg }) => {
     setCommentState({ ...commentState, [target.name]: target.value })
   }
 
-  const handleCreateComment= event => {
+  const handleCreateComment = event => {
     event.preventDefault()
     let newComment = {
       comment_text: commentState.comment_text
