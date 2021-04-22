@@ -7,12 +7,11 @@ import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import { Divider } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
+import { storage } from '../../components/firebase'
 
 import { useState, useEffect } from 'react'
 import Post from '../../components/Post'
-import PostAPI  from '../../utils/PostAPI'
-
-
+import PostAPI from '../../utils/PostAPI'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,8 +32,41 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles()
 
+  const [image, setImage] = useState(null)
+  const [url, setUrl] = useState('')
+
+  const handleChange = e => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0])
+     
+    }
+  }
+
+  const handleUpload = () => {
+    // const uploadTask = storage.ref(`images/${image.name}`).put(image)
+    // uploadTask.on(
+    //   'state_changed',
+    //   snapshot => { },
+    //   error => {
+    //     console.log(error)
+    //   },
+    //   () => {
+    //     storage
+    //       .ref('images')
+    //       .child(image.name)
+    //       .getDownloadURL()
+    //       .then(url => {
+    //         console.log(url)
+    //       })
+    //   }
+    // )
+  }
+
+console.log('image', image)
+
   const [postState, setPostState] = useState({
     text: '',
+    image: '',
     posts: []
   })
 
@@ -44,15 +76,36 @@ const Home = () => {
 
   const handleCreatePost = event => {
     event.preventDefault()
+
+    const uploadTask = storage.ref(`images/${image.name}`).put(image)
+    uploadTask.on(
+      'state_changed',
+      snapshot => { },
+      error => {
+        console.log(error)
+      },
+      () => {
+        storage
+          .ref('images')
+          .child(image.name)
+          .getDownloadURL()
+          .then(url => {
+            setUrl(url)
+            // console.log(url)
+          })
+      }
+    )
+
     const newPost = {
-      post_content: postState.text
+      post_content: postState.text,
+      post_images: postState.image
     }
     PostAPI.createPost(newPost)
       .then(({ data: post }) => {
         const posts = [...postState.posts]
         posts.push(post)
-        setPostState({ ...postState, posts, text: ''})
-      }) 
+        setPostState({ ...postState, posts, text: '' })
+      })
       .catch(err => console.log(err))
   }
 
@@ -93,34 +146,37 @@ const Home = () => {
               value={postState.text}
               onChange={handleInputChange}
             />
-              {/* Image Upload Button */}
-              <input accept="image/*" className={classes.imgUp} id="contained-button-file" multiple type="file" />
-              <label htmlFor="contained-button-file">
-              <Button 
-                variant="contained" 
-                color="primary" 
-                component="span" 
-                startIcon={<ImageIcon />} 
+            {/* Image Upload Button */}
+            <input accept="image/*" onChange={handleChange} className={classes.imgUp} id="contained-button-file" multiple type="file" />
+            <label htmlFor="contained-button-file">
+              <Button
+                variant="contained"
+                color="primary"
+                component="span"
+                startIcon={<ImageIcon />}
+                onClick={handleUpload}
                 className={classes.postButtons}
               >
-                Upload
+                Image
               </Button>
-              </label> 
-              {/* Youtube Link Button */}
-              <Button 
-                variant="contained" 
-                color="primary" 
-                startIcon={<YouTubeIcon />} 
-                className={classes.postButtons}
-              >
-                Link
+              {/* <img src={url} alt="firebase-image"/> */}
+            </label>
+            {/* Youtube Link Button */}
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<YouTubeIcon />}
+              className={classes.postButtons}
+            >
+              Link
               </Button>
-              {/* Submit Button */}
-            <Button 
-              variant="contained" 
-              color="primary" 
+            {/* Submit Button */}
+            <Button
+              variant="contained"
+              color="primary"
               className={classes.postButtons}
               onClick={handleCreatePost}
+              
             >
               Submit
             </Button>
@@ -129,15 +185,15 @@ const Home = () => {
       </Grid>
       <Grid item xs={9}>
         <Typography variant="h4" gutterBottom>
-          Feed:
+          Feed: 
         </Typography>
         <Divider />
       </Grid>
       {
-        postState.posts > 0 
+        postState.posts > 0
           ? postState.posts.slice(0).reverse().map(post => (
-            <Post 
-              username={post.author.username} 
+            <Post
+              username={post.author.username}
               content={post.post_content}
               userImg={'./images/birdBook.png'}
             />

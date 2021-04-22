@@ -14,7 +14,9 @@ const Post = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Comment'
   }],
-  post_date: Date
+  post_date: Date,
+  
+  post_image: String
 })
 
 module.exports = model('Post', Post)
