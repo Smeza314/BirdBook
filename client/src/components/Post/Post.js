@@ -11,6 +11,7 @@ import Link from '@material-ui/core/Link'
 import Box from '@material-ui/core/Box'
 import { useState, useEffect } from 'react'
 import Comment from '../../utils/CommentAPI'
+import { Link as RouteLink } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,8 +45,10 @@ const useStyles = makeStyles((theme) => ({
   },
   profileLink: {
     '&:hover': {
-      cursor: 'pointer'
+      cursor: 'pointer',
+      textDecoration: 'underline'
     },
+    textDecoration: 'none',
     color: 'black'
   }
 }))
@@ -99,7 +102,7 @@ const Post = ({ post, userImg}) => {
 
   useEffect(() => {
     Comment.getComments(post._id)
-      .then(({ data: comments}) => {
+      .then(({ data: comments }) => {
         setCommentState({ ...commentState, comments })
       })
       .catch(err => console.log(err))
@@ -107,18 +110,22 @@ const Post = ({ post, userImg}) => {
   }, [])
   const handleProfileLink = () => {
     localStorage.setItem('profile', post.author._id)
-    window.location = `/profile/${post.author._id}`
+    // window.location = `/profile/${post.author._id}`
   }
 
   return(
     <Grid item xs={9}>
       <Paper className={classes.paper} variant="outlined">
-        <Link className={classes.profileLink} onClick={handleProfileLink}>
         <Box display="flex" alignItems="center" className={classes.Userprofile} >
           <Avatar src={userImg} alt='User' className={classes.large} />
-          <Typography variant="h6">{post.author.username}</Typography>
+          <RouteLink 
+            className={classes.profileLink} 
+            to={`/profile`} 
+            onClick={handleProfileLink}
+          >
+            <Typography variant="h6">{post.author.username}</Typography>
+          </RouteLink>
         </Box>
-        </Link>
         <Typography variant="body1">{post.post_content}</Typography>
         <Typography variant="body2">
           <Link>
@@ -139,7 +146,8 @@ const Post = ({ post, userImg}) => {
               commentState.comments.length
               ? commentState.comments.map(comment => (
                 <>
-                <Box 
+                <Box
+                  key={comment._id}
                   display="flex" 
                   alignItems="center" 
                   className={classes.Userprofile} 
