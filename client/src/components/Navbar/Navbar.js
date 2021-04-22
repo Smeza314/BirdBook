@@ -70,14 +70,20 @@ const Navbar = (props) => {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
   }
- useEffect(() =>{
-  User.info()
-  .then(({data}) => {
-    console.log(data)
-    setUser({...user, id:data._id})
-  })
-  .catch(err => console.log(err)) 
- },[]) 
+
+  const handleProfileLink = () => {
+    localStorage.setItem('profile', user.id)
+  }
+
+  useEffect(() =>{
+    User.info()
+    .then(({data}) => {
+      // console.log(data)
+      setUser({...user, id:data._id})
+    })
+    .catch(err => console.log(err)) 
+  },[]) 
+
   return (
     <div className={classes.root}>
       <AppBar position="sticky" className={classes.appBar}>
@@ -96,7 +102,11 @@ const Navbar = (props) => {
           <Link to='/' className={classes.link}>
             <Button color='inherit'>Feed</Button>
           </Link>
-          <Link to={`/profile/${user.id}`} className={classes.link} >
+          <Link 
+            to={`/profile`} 
+            className={classes.link}
+            onClick={handleProfileLink}
+          >
             <Button color='inherit'>Profile</Button>
           </Link>
           </Typography>

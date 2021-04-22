@@ -50,12 +50,12 @@ const LoginForm = () => {
       await axios.get('https://api.chatengine.io/chats', { headers: authObject })
       localStorage.setItem('username', loginState.username)
       localStorage.setItem('password', loginState.password)
-
     } catch (error) {
-
+      
     }
 
 
+    console.log(loginState)
     User.login({
       username: loginState.username,
       password: loginState.password

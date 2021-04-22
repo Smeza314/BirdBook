@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper'
 import { Divider } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Fragment } from 'react'
 import Post from '../../components/Post'
 import PostAPI  from '../../utils/PostAPI'
 
@@ -20,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.text,
   },
   feedContainer: {
-    marginTop: 15
+    marginTop: 15,
+    maxWidth: '100%'
   },
   imgUp: {
     display: 'none',
@@ -56,17 +57,25 @@ const Home = () => {
       .catch(err => console.log(err))
   }
 
+  const [isLoading, setIsLoading] = useState(false)
+
   useEffect(() => {
+    setIsLoading(true)
     PostAPI.getPosts()
       .then(({ data: posts }) => {
         setPostState({ ...postState, posts })
-        // console.log(postState.posts)
+        setIsLoading(false)
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        setIsLoading(false)
+        console.log(err)
+      })
   }, [])
 
 
   return (
+    <>
+    { isLoading ? null:
     <Grid container
       className={classes.feedContainer}
       spacing={1}
@@ -135,7 +144,8 @@ const Home = () => {
       {
         postState.posts.length > 0 
           ? postState.posts.slice(0).reverse().map(post => (
-            <Post 
+            <Post
+              key={post._id} 
               post={post}
               userImg={'./images/birdBook.png'}
             />
@@ -143,6 +153,8 @@ const Home = () => {
           : null
       }
     </Grid>
+    }
+    </>
   )
 }
 

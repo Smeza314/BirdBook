@@ -9,7 +9,6 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import { makeStyles } from '@material-ui/core/styles'
 
 
-
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
@@ -77,7 +76,7 @@ const App = () => {
                   <Home />
                 </div>
               </PrivateRoute>
-              <PrivateRoute path='/profile'>
+              <PrivateRoute path='/profile'  >
                 <div className={classes.content}>
                   <Profile />
                 </div>
