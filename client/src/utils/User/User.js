@@ -7,6 +7,11 @@ const User = {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('user')}`
     }
+  }),
+  profileInfo: id => axios.get(`/api/users/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('user')}`
+    }
   })
 }
 
