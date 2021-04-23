@@ -12,6 +12,7 @@ import Box from '@material-ui/core/Box'
 import { useState, useEffect } from 'react'
 import Comment from '../../utils/CommentAPI'
 import { Link as RouteLink } from 'react-router-dom'
+import { storage } from '../../components/firebase'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -127,6 +128,11 @@ const Post = ({ post, userImg}) => {
           </RouteLink>
         </Box>
         <Typography variant="body1">{post.post_content}</Typography>
+        {
+          post.post_image !== ''
+            ? <img src={post.post_image} alt={post.post_imageName} />
+          : null 
+        }
         <Typography variant="body2">
           <Link>
             <ThumbUpIcon

@@ -13,6 +13,7 @@ import { useState, useEffect, Fragment } from 'react'
 import Post from '../../components/Post'
 import PostAPI from '../../utils/PostAPI'
 
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(1),
@@ -63,7 +64,7 @@ const Home = () => {
     // )
   }
 
-console.log('image', image)
+// console.log('image', image)
 
   const [postState, setPostState] = useState({
     text: '',
@@ -78,36 +79,53 @@ console.log('image', image)
   const handleCreatePost = event => {
     event.preventDefault()
 
-    const uploadTask = storage.ref(`images/${image.name}`).put(image)
-    uploadTask.on(
-      'state_changed',
-      snapshot => { },
-      error => {
-        console.log(error)
-      },
-      () => {
-        storage
-          .ref('images')
-          .child(image.name)
-          .getDownloadURL()
-          .then(url => {
-            setUrl(url)
-            // console.log(url)
-          })
+    if (image !== null) {
+      const uploadTask = storage.ref(`images/${image.name}`).put(image)
+      uploadTask.on(
+        'state_changed',
+        snapshot => { },
+        error => {
+          console.log(error)
+        },
+        () => {
+          storage
+            .ref('images')
+            .child(image.name)
+            .getDownloadURL()
+            .then(url => {
+              setUrl(url)
+              console.log(url)
+              const newPost = {
+                post_content: postState.text,
+                post_image: url,
+                post_imageName: image.name
+              }
+              PostAPI.createPost(newPost)
+                .then(({ data: post }) => {
+                  const posts = [...postState.posts]
+                  posts.push(post)
+                  setPostState({ ...postState, posts, text: '' })
+                  setUrl('')
+                  setImage(null)
+                })
+                .catch(err => console.log(err))
+            })
+        }
+      )
+    } else {
+      const newPost = {
+        post_content: postState.text
       }
-    )
-
-    const newPost = {
-      post_content: postState.text,
-      post_images: postState.image
+      PostAPI.createPost(newPost)
+        .then(({ data: post }) => {
+          const posts = [...postState.posts]
+          posts.push(post)
+          setPostState({ ...postState, posts, text: '' })
+        })
+        .catch(err => console.log(err))
     }
-    PostAPI.createPost(newPost)
-      .then(({ data: post }) => {
-        const posts = [...postState.posts]
-        posts.push(post)
-        setPostState({ ...postState, posts, text: '' })
-      }) 
-      .catch(err => console.log(err))
+
+    
   }
 
   const [isLoading, setIsLoading] = useState(false)
@@ -121,7 +139,7 @@ console.log('image', image)
       })
       .catch(err => {
         setIsLoading(false)
-        console.log(err)
+        console.log(err) 
       })
   }, [])
 
@@ -167,7 +185,8 @@ console.log('image', image)
               >
                 Image
               </Button>
-              {/* <img src={url} alt="firebase-image"/> */}
+                  {/* <img src={url} alt="firebase" /> */}
+              
             </label>
             {/* Youtube Link Button */}
             <Button
@@ -200,11 +219,14 @@ console.log('image', image)
       {
         postState.posts.length > 0 
           ? postState.posts.slice(0).reverse().map(post => (
-            <Post
+           <>
+            <Post 
               key={post._id} 
               post={post}
               userImg={'./images/birdBook.png'}
             />
+            
+            </>
           ))
           : null
       }

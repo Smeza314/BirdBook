@@ -16,7 +16,9 @@ const Post = new Schema({
   }],
   post_date: Date,
   
-  post_image: String
+  post_image: String,
+
+  post_imageName: String
 })
 
 module.exports = model('Post', Post)
