@@ -105,6 +105,12 @@ const Navbar = (props) => {
           >
             <Button color='inherit'>Profile</Button>
           </Link>
+          <Link 
+            to={`/message`} 
+            className={classes.link}
+          >
+            <Button color='inherit'>Messages</Button>
+          </Link>
           </Typography>
           <Link to='/login' className={classes.link}>
             <Button onClick={handleLogOut} color='inherit'>Sign Out</Button>

@@ -74,7 +74,10 @@ const useStyles = makeStyles((theme) => ({
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    height: '100vh'
+    height: '100vh',
+    width: '100vh',
+    // maxwidth: '100vh',
+    // maxheight: '100vh'
   },
   
 }));
@@ -92,8 +95,10 @@ const Login = () => {
 
       <Grid container component="main" maxWidth="xs">
         <CssBaseline />
-        <Grid item xs={false} sm={4}  lg={6} md={6} xl= {6} className={classes.image} />
+        <Grid item xs={false} sm={12}  lg={8} md={8} xl={6} className={classes.image} />
+        <Grid item xs={false} sm={12} lg={4} md={4} xl={6}>
         <div className={classes.root}>
+          
           <AppBar position="static">
             <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered>
               <Tab label="Login" {...a11yProps(0)} />
@@ -107,6 +112,7 @@ const Login = () => {
             <RegisterForm />
           </TabPanel>
         </div>
+        </Grid>
       </Grid>
 
 
