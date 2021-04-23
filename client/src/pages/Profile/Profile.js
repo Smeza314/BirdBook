@@ -78,11 +78,7 @@ const Profile = () => {
       .then(({ data: user }) => {
         const newUser = user
         setUserState({ ...userState, user: newUser })
-        // if(user.friends.includes(localStorage.getItem('profile'))) {
-        //   setIsFriend(true)
-        // }  
         for (let i = 0; i < user.friends.length; i++) {
-          console.log(user.friends[0]._id)
           console.log(localStorage.getItem('profile'))
           if (user.friends[i]._id === localStorage.getItem('profile')) {
             setIsFriend(true)
@@ -148,8 +144,6 @@ const Profile = () => {
                   <Button color='primary' variant='contained' disabled>Add Friend</Button>
                 : <Button color='primary' variant='contained' onClick={handleAddFriend}>Add Friend</Button>
                 }
-              
-              <Button color='primary'>New Message</Button>
               </Grid>
               <Grid item xs={9}>
                 <Typography variant="h4" gutterBottom>
