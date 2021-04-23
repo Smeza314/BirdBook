@@ -16,7 +16,7 @@ const PostAPI = {
       'Authorization': `Bearer ${localStorage.getItem('user')}`
     }
   }),
-  addLike: post => axios.put(`/api/posts/likes/${post}`, {
+  addLike: post => axios.put(`/api/posts/likes/${post}`, {}, {
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('user')}`
     }

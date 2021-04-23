@@ -11,6 +11,8 @@ import Link from '@material-ui/core/Link'
 import Box from '@material-ui/core/Box'
 import { useState, useEffect } from 'react'
 import Comment from '../../utils/CommentAPI'
+import PostAPI from '../../utils/PostAPI'
+import User from '../../utils/User'
 import { Link as RouteLink } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
@@ -54,7 +56,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const Post = ({ post, userImg}) => {
+const Post = ({ post, userImg }) => {
+
   // Example Post Data:
   // const postData = {
   //   userPostImg: './images/birdBook.png',
@@ -72,11 +75,18 @@ const Post = ({ post, userImg}) => {
     comments: []
   })
 
+  const [userInfo, setUserInfo] = useState({
+    id: ''
+  })
+
+  const [isLiked, setIsLiked] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
   const handleInputChange = ({ target }) => {
     setCommentState({ ...commentState, [target.name]: target.value })
   }
 
-  const handleCreateComment= event => {
+  const handleCreateComment = event => {
     event.preventDefault()
     let newComment = {
       comment_text: commentState.comment_text
@@ -97,10 +107,26 @@ const Post = ({ post, userImg}) => {
 
   const handleLikes = event => {
     event.preventDefault()
-    console.log('hi')
+
+    PostAPI.addLike(post._id)
+      .then(() => {
+        setIsLiked(true)
+      })
+      .catch(err => console.log(err))
   }
 
   useEffect(() => {
+    setIsLoading(true)
+    User.info()
+      .then(({ data: user }) => {
+        setUserInfo({ ...userInfo, id:user._id })
+        for (let i = 0; i < post.likes.length; i++) {
+          if (post.likes[i]._id === user._id) {
+            setIsLiked(true)
+            setIsLoading(false)
+          }
+        }
+      })
     Comment.getComments(post._id)
       .then(({ data: comments }) => {
         setCommentState({ ...commentState, comments })
@@ -114,6 +140,8 @@ const Post = ({ post, userImg}) => {
   }
 
   return(
+    <>
+    { isLoading ? null:
     <Grid item xs={9}>
       <Paper className={classes.paper} variant="outlined">
         <Box display="flex" alignItems="center" className={classes.Userprofile} >
@@ -129,7 +157,8 @@ const Post = ({ post, userImg}) => {
         <Typography variant="body1">{post.post_content}</Typography>
         <Typography variant="body2">
           <Link>
-            <ThumbUpIcon
+            {post.likes.length ? post.likes.length : null}<ThumbUpIcon
+              color={isLiked ? 'secondary' : 'primary' }
               style={{ fontSize: 14 }}
               onClick={handleLikes}
               className={classes.likeLink} />
@@ -199,6 +228,8 @@ const Post = ({ post, userImg}) => {
 
       </Paper>
     </Grid>
+    }
+  </>
   ) 
 }
 

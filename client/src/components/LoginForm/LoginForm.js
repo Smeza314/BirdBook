@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import User from '../../utils/User'
 import { useState } from 'react'
+import axios from 'axios'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,8 +42,19 @@ const LoginForm = () => {
     setLoginState({ ...loginState, [target.name]: target.value })
   }
 
-  const handleLogin = event => {
+  const handleLogin = async (event) => {
     event.preventDefault()
+
+    const authObject = { 'Project-ID': '5ae05ac3-2130-4648-8d2d-1d89723a9fa3', 'User-Name': loginState.username, 'User-Secret': loginState.password}
+    try {
+      await axios.get('https://api.chatengine.io/chats', { headers: authObject })
+      localStorage.setItem('username', loginState.username)
+      localStorage.setItem('password', loginState.password)
+    } catch (error) {
+      
+    }
+
+
     console.log(loginState)
     User.login({
       username: loginState.username,
