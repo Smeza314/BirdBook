@@ -1,7 +1,6 @@
 html, body {
   min-height: 100%;
   font-family: sans-serif;
-  /* margin-bottom: 5vh; */
 }
 
 body {
@@ -9,21 +8,17 @@ body {
   padding: 0;
 }
 
-#root {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
 .footer {
   flex-shrink: 0;
   text-align: center;
   background-color: #29b6f6;
   color: white;
-  position: fixed;
+  position: relative;
   bottom: 0;
+  left: 0;
+  right: 0;
   width: 100%;
-  /* height: 5vh; */
+  height: 4vh;
   
 }
 
