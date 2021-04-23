@@ -7,11 +7,11 @@ import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import { Divider } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
+import { storage } from '../../components/firebase'
 
 import { useState, useEffect, Fragment } from 'react'
 import Post from '../../components/Post'
-import PostAPI  from '../../utils/PostAPI'
-
+import PostAPI from '../../utils/PostAPI'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,8 +34,41 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles()
 
+  const [image, setImage] = useState(null)
+  const [url, setUrl] = useState('')
+
+  const handleChange = e => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0])
+     
+    }
+  }
+
+  const handleUpload = () => {
+    // const uploadTask = storage.ref(`images/${image.name}`).put(image)
+    // uploadTask.on(
+    //   'state_changed',
+    //   snapshot => { },
+    //   error => {
+    //     console.log(error)
+    //   },
+    //   () => {
+    //     storage
+    //       .ref('images')
+    //       .child(image.name)
+    //       .getDownloadURL()
+    //       .then(url => {
+    //         console.log(url)
+    //       })
+    //   }
+    // )
+  }
+
+// console.log('image', image)
+
   const [postState, setPostState] = useState({
     text: '',
+    image: '',
     posts: []
   })
 
@@ -45,17 +78,54 @@ const Home = () => {
 
   const handleCreatePost = event => {
     event.preventDefault()
-    const newPost = {
-      post_content: postState.text
+
+    if (image !== null) {
+      const uploadTask = storage.ref(`images/${image.name}`).put(image)
+      uploadTask.on(
+        'state_changed',
+        snapshot => { },
+        error => {
+          console.log(error)
+        },
+        () => {
+          storage
+            .ref('images')
+            .child(image.name)
+            .getDownloadURL()
+            .then(url => {
+              setUrl(url)
+              console.log(url)
+              const newPost = {
+                post_content: postState.text,
+                post_image: url,
+                post_imageName: image.name
+              }
+              PostAPI.createPost(newPost)
+                .then(({ data: post }) => {
+                  const posts = [...postState.posts]
+                  posts.push(post)
+                  setPostState({ ...postState, posts, text: '' })
+                  setUrl('')
+                  setImage(null)
+                })
+                .catch(err => console.log(err))
+            })
+        }
+      )
+    } else {
+      const newPost = {
+        post_content: postState.text
+      }
+      PostAPI.createPost(newPost)
+        .then(({ data: post }) => {
+          const posts = [...postState.posts]
+          posts.push(post)
+          setPostState({ ...postState, posts, text: '' })
+        })
+        .catch(err => console.log(err))
     }
-    PostAPI.createPost(newPost)
-      .then(({ data: post }) => {
-        console.log(post)
-        const posts = [...postState.posts]
-        posts.push(post)
-        setPostState({ ...postState, posts, text: '' })
-      }) 
-      .catch(err => console.log(err))
+
+    
   }
 
   const [isLoading, setIsLoading] = useState(false)
@@ -69,7 +139,7 @@ const Home = () => {
       })
       .catch(err => {
         setIsLoading(false)
-        console.log(err)
+        console.log(err) 
       })
   }, [])
 
@@ -102,17 +172,18 @@ const Home = () => {
               value={postState.text}
               onChange={handleInputChange}
             />
-              {/* Image Upload Button */}
-              <input accept="image/*" className={classes.imgUp} id="contained-button-file" multiple type="file" />
-              <label htmlFor="contained-button-file">
-              <Button 
-                variant="contained" 
-                color="primary" 
-                component="span" 
-                startIcon={<ImageIcon />} 
+            {/* Image Upload Button */}
+            <input accept="image/*" onChange={handleChange} className={classes.imgUp} id="contained-button-file" multiple type="file" />
+            <label htmlFor="contained-button-file">
+              <Button
+                variant="contained"
+                color="primary"
+                component="span"
+                startIcon={<ImageIcon />}
+                onClick={handleUpload}
                 className={classes.postButtons}
               >
-                Upload
+                Image
               </Button>
               </label> 
               {/* Submit Button */}
@@ -121,6 +192,7 @@ const Home = () => {
               color="primary" 
               className={classes.postButtons}
               onClick={handleCreatePost}
+              
             >
               Submit
             </Button>
@@ -129,18 +201,21 @@ const Home = () => {
       </Grid>
       <Grid item xs={9}>
         <Typography variant="h4" gutterBottom>
-          Feed:
+          Feed: 
         </Typography>
         <Divider />
       </Grid>
       {
         postState.posts.length > 0 
           ? postState.posts.slice(0).reverse().map(post => (
-            <Post
+           <>
+            <Post 
               key={post._id} 
               post={post}
               userImg={'./images/birdBook.png'}
             />
+            
+            </>
           ))
           : null
       }

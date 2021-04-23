@@ -14,6 +14,7 @@ import Comment from '../../utils/CommentAPI'
 import PostAPI from '../../utils/PostAPI'
 import User from '../../utils/User'
 import { Link as RouteLink } from 'react-router-dom'
+import { storage } from '../../components/firebase'
 import ReactPlayer from 'react-player'
 
 const useStyles = makeStyles((theme) => ({
@@ -156,6 +157,12 @@ const Post = ({ post, userImg }) => {
             <Typography variant="h6">{post.author.username}</Typography>
           </RouteLink>
         </Box>
+        <Typography variant="body1">{post.post_content}</Typography>
+        {
+          post.post_image !== ''
+            ? <img src={post.post_image} alt={post.post_imageName} />
+          : null 
+        }
         <Typography variant="body1">{isUrl(post.post_content) ? <ReactPlayer url={post.post_content} /> : post.post_content}</Typography>
         <Typography variant="body2">
           <Link>
