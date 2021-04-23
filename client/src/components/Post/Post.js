@@ -11,8 +11,11 @@ import Link from '@material-ui/core/Link'
 import Box from '@material-ui/core/Box'
 import { useState, useEffect } from 'react'
 import Comment from '../../utils/CommentAPI'
+import PostAPI from '../../utils/PostAPI'
+import User from '../../utils/User'
 import { Link as RouteLink } from 'react-router-dom'
 import { storage } from '../../components/firebase'
+import ReactPlayer from 'react-player'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -55,16 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const Post = ({ post, userImg}) => {
-  // Example Post Data:
-  // const postData = {
-  //   userPostImg: './images/birdBook.png',
-  //   postUsername: 'Username',
-  //   postText: `
-  //         Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad sequi suscipit, accusantium tenetur, culpa cupiditate labore porro itaque quia omnis facere eos molestias aliquam nam quasi libero perspiciatis. Architecto, maxime!
-  //         Recusandae reiciendis sequi similique velit libero nulla molestias quos, pariatur facere placeat a dicta. Fuga distinctio, recusandae, repellat sapiente placeat reiciendis maiores aspernatur adipisci vel reprehenderit doloribus, totam consectetur pariatur?`
-  // }
-
+const Post = ({ post, userImg }) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
@@ -73,11 +67,23 @@ const Post = ({ post, userImg}) => {
     comments: []
   })
 
+  const [userInfo, setUserInfo] = useState({
+    id: ''
+  })
+
+  const [likes, setLikes] = useState(0)
+  const [isLiked, setIsLiked] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const isUrl = (string) => {
+    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+    return regexp.test(string)
+  }
+
   const handleInputChange = ({ target }) => {
     setCommentState({ ...commentState, [target.name]: target.value })
   }
 
-  const handleCreateComment= event => {
+  const handleCreateComment = event => {
     event.preventDefault()
     let newComment = {
       comment_text: commentState.comment_text
@@ -98,23 +104,47 @@ const Post = ({ post, userImg}) => {
 
   const handleLikes = event => {
     event.preventDefault()
-    console.log('hi')
-  }
 
-  useEffect(() => {
-    Comment.getComments(post._id)
-      .then(({ data: comments }) => {
-        setCommentState({ ...commentState, comments })
+    PostAPI.addLike(post._id)
+      .then(() => {
+        if(isLiked === false){
+          setLikes(likes + 1)
+        }
+        setIsLiked(true)
+        
       })
       .catch(err => console.log(err))
+  }
 
-  }, [])
   const handleProfileLink = () => {
     localStorage.setItem('profile', post.author._id)
     // window.location = `/profile/${post.author._id}`
   }
 
+  useEffect(() => {
+    setIsLoading(true)
+    User.info()
+      .then(({ data: user }) => {
+        setUserInfo({ ...userInfo, id:user._id })
+        for (let i = 0; i < post.likes.length; i++) {
+          if (post.likes[i]._id === user._id) {
+            setIsLiked(true)
+          }
+        }
+        setIsLoading(false)
+      })
+    Comment.getComments(post._id)
+      .then(({ data: comments }) => {
+        setCommentState({ ...commentState, comments })
+      })
+      .catch(err => console.log(err))
+    setLikes(post.likes.length)
+  }, [])
+  
+
   return(
+    <>
+    { isLoading ? null:
     <Grid item xs={9}>
       <Paper className={classes.paper} variant="outlined">
         <Box display="flex" alignItems="center" className={classes.Userprofile} >
@@ -133,9 +163,11 @@ const Post = ({ post, userImg}) => {
             ? <img src={post.post_image} alt={post.post_imageName} />
           : null 
         }
+        <Typography variant="body1">{isUrl(post.post_content) ? <ReactPlayer url={post.post_content} /> : post.post_content}</Typography>
         <Typography variant="body2">
           <Link>
-            <ThumbUpIcon
+            {likes ? likes : null}<ThumbUpIcon
+              color={isLiked ? 'secondary' : 'primary' }
               style={{ fontSize: 14 }}
               onClick={handleLikes}
               className={classes.likeLink} />
@@ -151,9 +183,9 @@ const Post = ({ post, userImg}) => {
             {
               commentState.comments.length
               ? commentState.comments.map(comment => (
-                <>
+                <span key={comment._id}>
                 <Box
-                  key={comment._id}
+                  
                   display="flex" 
                   alignItems="center" 
                   className={classes.Userprofile} 
@@ -167,7 +199,7 @@ const Post = ({ post, userImg}) => {
                 </Box>
                 <Typography variant="body2">{comment.comment_text}</Typography>
                 <Divider />
-                </>
+                </span>
               ))
               :null
             }
@@ -205,6 +237,8 @@ const Post = ({ post, userImg}) => {
 
       </Paper>
     </Grid>
+    }
+  </>
   ) 
 }
 

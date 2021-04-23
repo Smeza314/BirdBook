@@ -120,20 +120,26 @@ const Sidebar = ({ handleDrawerToggle }) => {
   const [userState, setUserState] = useState({
     user: {},
   })
+  const[isLoading, setIsLoading] = useState(false)
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setValue(newValue)
   }
 
   useEffect(() => {
+    setIsLoading(true)
     User.info()
       .then(({ data: user }) => {
         const newUser = user
         setUserState({ ...userState, user: newUser })
+        console.log(user)
+        setIsLoading(false)
       })
   },[])
 
   return (
+    <>
+    { isLoading ? null:  
     <div>
       <div className={classes.toolbar} >
         <img src='./images/birdBookText.png' alt='text logo' className={classes.textLogo} />
@@ -180,13 +186,13 @@ const Sidebar = ({ handleDrawerToggle }) => {
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           <List className={classes.messageList} >
-            {
-              friendlist.map((friend, i) =>
-                <span key={i}>
+            { userState.user.friends ?
+              userState.user.friends.map(friend =>
+                <span key={friend._id}>
 
                   <ListItem alignItems="center">
                     <ListItemAvatar>
-                      <Avatar alt={friend.username} src={friend.photo} />
+                      <Avatar alt={friend.username} src={'./images/birdBook2.png'} />
                     </ListItemAvatar>
                     <Link component={RouterLink} to="/message">
                       <ListItemText 
@@ -198,11 +204,14 @@ const Sidebar = ({ handleDrawerToggle }) => {
                   <Divider />
                   </span>
               )
+              : null
             }
           </List>
         </TabPanel>
         </div>
     </div>
+    }
+    </>
   )
 }
 

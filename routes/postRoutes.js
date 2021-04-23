@@ -22,14 +22,15 @@ router.post('/posts', passport.authenticate('jwt'), (req, res) => {
     .then(post => {
       User.findByIdAndUpdate(req.user._id, { $push: { posts: post._id } })
         .then(() => {
-          res.json({
+          let outputPost = {
             _id: post._id,
             post_content: post.post_content,
-            author: req.user,
-            post_image: post.post_image,
-            post_imageName: post.post_imageName,
-            post_date: post.post_date
-          })
+            post_date: post.post_date,
+            likes: post.likes,
+            comments: post.comments,  
+            author: req.user
+          }
+          res.json(outputPost)
         })
         .catch(err => console.log(err))
     })
@@ -43,5 +44,12 @@ router.put('/posts/likes/:id', passport.authenticate('jwt'), (req, res) => {
     })
     .catch(err => console.log(err))
 })
+
+// router.get('/posts/likes/:id', passport.authenticate('jwt'), (req, res) => {
+//   Post.find({})
+//     .populate('likes')
+//     .then((likes) => res.json(likes))
+//     .catch((err) => console.log(err))
+// })
 
 module.exports = router

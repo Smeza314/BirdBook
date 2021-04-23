@@ -185,22 +185,11 @@ const Home = () => {
               >
                 Image
               </Button>
-                  {/* <img src={url} alt="firebase" /> */}
-              
-            </label>
-            {/* Youtube Link Button */}
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<YouTubeIcon />}
-              className={classes.postButtons}
-            >
-              Link
-              </Button>
-            {/* Submit Button */}
-            <Button
-              variant="contained"
-              color="primary"
+              </label> 
+              {/* Submit Button */}
+            <Button 
+              variant="contained" 
+              color="primary" 
               className={classes.postButtons}
               onClick={handleCreatePost}
               

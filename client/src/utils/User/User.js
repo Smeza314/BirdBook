@@ -8,6 +8,11 @@ const User = {
       Authorization: `Bearer ${localStorage.getItem('user')}`
     }
   }),
+  addFriend: id => axios.put(`/api/users/friend/${id}`, {}, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('user')}`
+    }
+  }),
   profileInfo: id => axios.get(`/api/users/${id}`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('user')}`

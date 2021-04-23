@@ -45,7 +45,7 @@ const ChatFeed = (props) => {
   }
 
 
-  if(!chat) return 'Loading...'
+  if(!chat) return 'Click the "+" to start a new conversation!'
   
   return (
     <div className='chat-feed'>

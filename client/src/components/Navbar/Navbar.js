@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const handleLogOut = event => {
-  localStorage.removeItem('user')
+  localStorage.removeItem('username', 'password', 'user')
 }
 
 
@@ -108,6 +108,12 @@ const Navbar = (props) => {
             onClick={handleProfileLink}
           >
             <Button color='inherit'>Profile</Button>
+          </Link>
+          <Link 
+            to={`/message`} 
+            className={classes.link}
+          >
+            <Button color='inherit'>Messages</Button>
           </Link>
           </Typography>
           <Link to='/login' className={classes.link}>

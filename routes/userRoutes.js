@@ -44,9 +44,9 @@ router.delete('/users', passport.authenticate('jwt'), (req, res) => {
 
 // PUT route to add a user to the friend list 
 router.put('/users/friend/:id', passport.authenticate('jwt'), (req,res) => {
-  User.findByIdAndUpdate(req.user._id, { $push: {friends: req.params.id} })
+  User.findByIdAndUpdate(req.user._id, { $addToSet: {friends: req.params.id} })
     .then(() => {
-      User.findByIdAndUpdate(req.params.id, { $push: { friends: req.user._id } })
+      User.findByIdAndUpdate(req.params.id, { $addToSet: { friends: req.user._id } })
         .then(() => res.sendStatus(200) )
         .catch(err => console.log(err))
     })
