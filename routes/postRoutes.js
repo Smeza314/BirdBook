@@ -30,7 +30,11 @@ router.post('/posts', passport.authenticate('jwt'), (req, res) => {
     .then(post => {
       User.findByIdAndUpdate(req.user._id, { $push: { posts: post._id } })
         .then(() => {
-          res.json(post)
+          res.json({
+            post_content: post.post_content,
+            author: req.user,
+            post_date: post.post_date
+          })
         })
         .catch(err => console.log(err))
     })
