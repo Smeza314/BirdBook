@@ -14,6 +14,7 @@ import Comment from '../../utils/CommentAPI'
 import PostAPI from '../../utils/PostAPI'
 import User from '../../utils/User'
 import { Link as RouteLink } from 'react-router-dom'
+import ReactPlayer from 'react-player'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -72,6 +73,10 @@ const Post = ({ post, userImg }) => {
   const [likes, setLikes] = useState(0)
   const [isLiked, setIsLiked] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const isUrl = (string) => {
+    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+    return regexp.test(string)
+  }
 
   const handleInputChange = ({ target }) => {
     setCommentState({ ...commentState, [target.name]: target.value })
@@ -151,7 +156,7 @@ const Post = ({ post, userImg }) => {
             <Typography variant="h6">{post.author.username}</Typography>
           </RouteLink>
         </Box>
-        <Typography variant="body1">{post.post_content}</Typography>
+        <Typography variant="body1">{isUrl(post.post_content) ? <ReactPlayer url={post.post_content} /> : post.post_content}</Typography>
         <Typography variant="body2">
           <Link>
             {likes ? likes : null}<ThumbUpIcon

@@ -115,15 +115,6 @@ const Home = () => {
                 Upload
               </Button>
               </label> 
-              {/* Youtube Link Button */}
-              <Button 
-                variant="contained" 
-                color="primary" 
-                startIcon={<YouTubeIcon />} 
-                className={classes.postButtons}
-              >
-                Link
-              </Button>
               {/* Submit Button */}
             <Button 
               variant="contained" 
