@@ -57,16 +57,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Post = ({ post, userImg }) => {
-
-  // Example Post Data:
-  // const postData = {
-  //   userPostImg: './images/birdBook.png',
-  //   postUsername: 'Username',
-  //   postText: `
-  //         Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad sequi suscipit, accusantium tenetur, culpa cupiditate labore porro itaque quia omnis facere eos molestias aliquam nam quasi libero perspiciatis. Architecto, maxime!
-  //         Recusandae reiciendis sequi similique velit libero nulla molestias quos, pariatur facere placeat a dicta. Fuga distinctio, recusandae, repellat sapiente placeat reiciendis maiores aspernatur adipisci vel reprehenderit doloribus, totam consectetur pariatur?`
-  // }
-
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
@@ -79,6 +69,7 @@ const Post = ({ post, userImg }) => {
     id: ''
   })
 
+  const [likes, setLikes] = useState(0)
   const [isLiked, setIsLiked] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -110,9 +101,18 @@ const Post = ({ post, userImg }) => {
 
     PostAPI.addLike(post._id)
       .then(() => {
+        if(isLiked === false){
+          setLikes(likes + 1)
+        }
         setIsLiked(true)
+        
       })
       .catch(err => console.log(err))
+  }
+
+  const handleProfileLink = () => {
+    localStorage.setItem('profile', post.author._id)
+    // window.location = `/profile/${post.author._id}`
   }
 
   useEffect(() => {
@@ -123,21 +123,18 @@ const Post = ({ post, userImg }) => {
         for (let i = 0; i < post.likes.length; i++) {
           if (post.likes[i]._id === user._id) {
             setIsLiked(true)
-            setIsLoading(false)
           }
         }
+        setIsLoading(false)
       })
     Comment.getComments(post._id)
       .then(({ data: comments }) => {
         setCommentState({ ...commentState, comments })
       })
       .catch(err => console.log(err))
-
+    setLikes(post.likes.length)
   }, [])
-  const handleProfileLink = () => {
-    localStorage.setItem('profile', post.author._id)
-    // window.location = `/profile/${post.author._id}`
-  }
+  
 
   return(
     <>
@@ -157,7 +154,7 @@ const Post = ({ post, userImg }) => {
         <Typography variant="body1">{post.post_content}</Typography>
         <Typography variant="body2">
           <Link>
-            {post.likes.length ? post.likes.length : null}<ThumbUpIcon
+            {likes ? likes : null}<ThumbUpIcon
               color={isLiked ? 'secondary' : 'primary' }
               style={{ fontSize: 14 }}
               onClick={handleLikes}
@@ -174,9 +171,9 @@ const Post = ({ post, userImg }) => {
             {
               commentState.comments.length
               ? commentState.comments.map(comment => (
-                <>
+                <span key={comment._id}>
                 <Box
-                  key={comment._id}
+                  
                   display="flex" 
                   alignItems="center" 
                   className={classes.Userprofile} 
@@ -190,7 +187,7 @@ const Post = ({ post, userImg }) => {
                 </Box>
                 <Typography variant="body2">{comment.comment_text}</Typography>
                 <Divider />
-                </>
+                </span>
               ))
               :null
             }
