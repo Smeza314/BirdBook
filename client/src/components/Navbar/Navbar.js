@@ -7,7 +7,6 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import Drawer from '@material-ui/core/Drawer'
 import { useState } from 'react'
-import Hidden from '@material-ui/core/Hidden' 
 import { Link } from 'react-router-dom'
 import '../../App.css'
 import Sidebar from '../Sidebar'
@@ -22,9 +21,6 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     color: theme.palette.secondary.main,
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
-    },
   },
   title: {
     flexGrow: 1
@@ -34,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+    // zIndex: theme.zIndex.drawer + 1,
     marginBottom: 4
   },
   drawer: {
@@ -124,7 +120,6 @@ const Navbar = (props) => {
 
       <nav className={classes.drawer} aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Hidden smUp implementation="css">
           <Drawer
             container={container}
             variant="temporary"
@@ -141,19 +136,6 @@ const Navbar = (props) => {
             {/* THis is where the sidebar component is added */}
             <Sidebar handleDrawerToggle={handleDrawerToggle}/>
           </Drawer>
-        </Hidden>
-        <Hidden xsDown implementation="css">
-          <Drawer
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            variant="permanent"
-            open
-          >
-            {/* THis is where the sidebar component is added */}
-            <Sidebar />
-          </Drawer>
-        </Hidden>
       </nav>
     </div>        
   )

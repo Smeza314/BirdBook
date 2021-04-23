@@ -58,11 +58,6 @@ const useStyles = makeStyles((theme) => ({
   },
   sideTab: {
     backgroundColor: theme.palette.background.paper,
-    width: 240,
-  },
-  otherTab: {
-    width:120,
-    minWidth: 120
   },
   textLogo: {
     height: 40, 
@@ -72,45 +67,10 @@ const useStyles = makeStyles((theme) => ({
   Userprofile: {
     marginBottom: 10, 
   },
-  messageList: {
+  friendList: {
     paddingTop: 0,
   }
-
-
 }))
-
-const messagelist = [
-  {
-    username: 'John Doe',
-    photo: './images/birdBook2.png'
-  },
-  {
-    username: 'Jane Doe',
-    photo: './images/birdBook2.png'
-  },
-  {
-    username: 'Jeff Doe',
-    photo: './images/birdBook2.png'
-  }
-]
-const friendlist = [
-  {
-    username: 'John Doe',
-    photo: './images/birdBook2.png'
-  },
-  {
-    username: 'Jane Doe',
-    photo: './images/birdBook2.png'
-  },
-  {
-    username: 'Jeff Doe',
-    photo: './images/birdBook2.png'
-  },
-  {
-    username: 'Jen Doe',
-    photo: './images/birdBook2.png'
-  }
-]
 
 const Sidebar = ({ handleDrawerToggle }) => {
 
@@ -140,7 +100,7 @@ const Sidebar = ({ handleDrawerToggle }) => {
   return (
     <>
     { isLoading ? null:  
-    <div>
+    <>
       <div className={classes.toolbar} >
         <img src='./images/birdBookText.png' alt='text logo' className={classes.textLogo} />
       </div>
@@ -158,43 +118,22 @@ const Sidebar = ({ handleDrawerToggle }) => {
           variant="fullWidth"
           aria-label="full width tabs example"  
         >
-            <Tab label="Messages" {...a11yProps(0)} className={classes.otherTab}/>
-            <Tab label="Friends" {...a11yProps(1)} className={classes.otherTab}/>
+          <Tab label="Friends" {...a11yProps(0)}/>
         </Tabs>
       </AppBar>
-        <TabPanel value={value} index={0} dir={theme.direction} disablePadding={true}>
-          <List className={classes.messageList} >
-            {
-              messagelist.map((msg, i) => 
-                <span key={i}>
-                <ListItem alignItems="center">
-                  <ListItemAvatar>
-                    <Avatar alt={msg.username} src={msg.photo} />
-                  </ListItemAvatar>
-                  <Link component={RouterLink} to="/message">
-                    <ListItemText 
-                    primary={msg.username} 
-                    onClick={handleDrawerToggle}
-                    />
-                  </Link>
-                </ListItem>
-                <Divider />
-                </span>
-              )
-            }
-          </List>
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          <List className={classes.messageList} >
+        <TabPanel value={value} index={0} dir={theme.direction}>
+          <List className={classes.friendList} >
             { userState.user.friends ?
               userState.user.friends.map(friend =>
                 <span key={friend._id}>
-
                   <ListItem alignItems="center">
                     <ListItemAvatar>
                       <Avatar alt={friend.username} src={'./images/birdBook2.png'} />
                     </ListItemAvatar>
-                    <Link component={RouterLink} to="/message">
+                    <Link 
+                      component={RouterLink} 
+                      to="/profile"
+                      onClick={() => localStorage.setItem('profile', friend._id)}>
                       <ListItemText 
                       primary={friend.username}
                       onClick={handleDrawerToggle}
@@ -208,8 +147,8 @@ const Sidebar = ({ handleDrawerToggle }) => {
             }
           </List>
         </TabPanel>
-        </div>
-    </div>
+      </div> 
+    </>
     }
     </>
   )

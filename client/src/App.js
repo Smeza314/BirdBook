@@ -51,9 +51,6 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     marginLeft: 0,
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: 240,
-    },
   }
 }))
 
