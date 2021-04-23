@@ -97,7 +97,7 @@ const Profile = () => {
           </Grid>
           
         </Grid>
-        <Grid contiainer 
+        <Grid container 
           justify="center"
           className={classes.feedContainer}
           spacing={1}
