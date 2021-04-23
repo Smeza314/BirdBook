@@ -50,6 +50,7 @@ const Home = () => {
     }
     PostAPI.createPost(newPost)
       .then(({ data: post }) => {
+        console.log(post)
         const posts = [...postState.posts]
         posts.push(post)
         setPostState({ ...postState, posts, text: '' })

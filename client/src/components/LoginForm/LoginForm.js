@@ -55,13 +55,12 @@ const LoginForm = () => {
     }
 
 
-    console.log(loginState)
+
     User.login({
       username: loginState.username,
       password: loginState.password
     })
       .then(({ data }) => {
-        console.log(data)
         localStorage.setItem('user', data)
         window.location = '/'
       })

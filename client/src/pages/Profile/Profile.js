@@ -62,13 +62,32 @@ const Profile = () => {
   const [postState, setPostState] = useState({
     posts: []
   })
+  const [isFriend, setIsFriend] = useState(false)
 
+  const handleAddFriend = event => {
+    event.preventDefault()
+    User.addFriend(localStorage.getItem('profile'))
+      .then(() => {
+        setIsFriend(true)
+      })
+      .catch(err => console.log(err))
+  }
 
   useEffect(() => {
     User.info()
       .then(({ data: user }) => {
         const newUser = user
-        setUserState({ ...userState, user: newUser })   
+        setUserState({ ...userState, user: newUser })
+        // if(user.friends.includes(localStorage.getItem('profile'))) {
+        //   setIsFriend(true)
+        // }  
+        for (let i = 0; i < user.friends.length; i++) {
+          console.log(user.friends[0]._id)
+          console.log(localStorage.getItem('profile'))
+          if (user.friends[i]._id === localStorage.getItem('profile')) {
+            setIsFriend(true)
+          }
+        }
       })
       .catch(err => console.log(err))
     PostAPI.getUserPosts(localStorage.getItem('profile'))
@@ -125,7 +144,11 @@ const Profile = () => {
               </>
             : <>
               <Grid item xs={9}>
-              <Button color='primary' variant='contained'>Add Friend</Button>
+                {isFriend ?
+                  <Button color='primary' variant='contained' disabled>Add Friend</Button>
+                : <Button color='primary' variant='contained' onClick={handleAddFriend}>Add Friend</Button>
+                }
+              
               <Button color='primary'>New Message</Button>
               </Grid>
               <Grid item xs={9}>

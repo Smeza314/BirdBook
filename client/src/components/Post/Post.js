@@ -57,16 +57,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Post = ({ post, userImg }) => {
-
-  // Example Post Data:
-  // const postData = {
-  //   userPostImg: './images/birdBook.png',
-  //   postUsername: 'Username',
-  //   postText: `
-  //         Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad sequi suscipit, accusantium tenetur, culpa cupiditate labore porro itaque quia omnis facere eos molestias aliquam nam quasi libero perspiciatis. Architecto, maxime!
-  //         Recusandae reiciendis sequi similique velit libero nulla molestias quos, pariatur facere placeat a dicta. Fuga distinctio, recusandae, repellat sapiente placeat reiciendis maiores aspernatur adipisci vel reprehenderit doloribus, totam consectetur pariatur?`
-  // }
-
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
@@ -181,9 +171,9 @@ const Post = ({ post, userImg }) => {
             {
               commentState.comments.length
               ? commentState.comments.map(comment => (
-                <>
+                <span key={comment._id}>
                 <Box
-                  key={comment._id}
+                  
                   display="flex" 
                   alignItems="center" 
                   className={classes.Userprofile} 
@@ -197,7 +187,7 @@ const Post = ({ post, userImg }) => {
                 </Box>
                 <Typography variant="body2">{comment.comment_text}</Typography>
                 <Divider />
-                </>
+                </span>
               ))
               :null
             }
