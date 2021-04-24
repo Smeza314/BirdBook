@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
   postButtons: {
     margin: theme.spacing(0.5),
   },
+  post_image: {
+    height: 100
+  }
 }))
 
 const Home = () => {

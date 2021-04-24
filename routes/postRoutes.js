@@ -36,6 +36,8 @@ router.post('/posts', passport.authenticate('jwt'), (req, res) => {
             post_content: post.post_content,
             post_date: post.post_date,
             likes: post.likes,
+            post_image: post.post_image,
+            post_imageName: post.post_imageName,
             comments: post.comments,  
             author: req.user
           }
