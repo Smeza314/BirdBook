@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import PostAPI from '../../utils/PostAPI'
 import Post from '../../components/Post'
 import User from '../../utils/User'
+import ProfileCard from '../../components/ProfileCard'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -130,6 +131,9 @@ const Profile = () => {
               <Grid item xs={9}>
               <Button color='primary' variant='contained'>Edit Profile Picture</Button>
               <Button color='primary'>Edit Banner Picture</Button>
+              </Grid>
+              <Grid item xs={9}>
+                <ProfileCard />
               </Grid>
               <Grid item xs={9}>
                 <Typography variant="h4" gutterBottom>
