@@ -13,6 +13,11 @@ const User = {
       Authorization: `Bearer ${localStorage.getItem('user')}`
     }
   }),
+  editProfile: user => axios.put(`/api/user`, user, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('user')}`
+    }
+  }),
   profileInfo: id => axios.get(`/api/users/${id}`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('user')}`

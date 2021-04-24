@@ -182,7 +182,6 @@ const Home = () => {
                 color="primary"
                 component="span"
                 startIcon={<ImageIcon />}
-                onClick={handleUpload}
                 className={classes.postButtons}
               >
                 Image

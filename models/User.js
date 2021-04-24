@@ -22,6 +22,10 @@ const User = new Schema({
   profileImage: {
     type: String,
     default: './images/birdBook2.png'
+  },
+  bannerImage: {
+    type: String,
+    default: './images/defaultBanner.jpg'
   }
 })
 
