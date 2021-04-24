@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import YouTubeIcon from '@material-ui/icons/YouTube'
 import TextField from '@material-ui/core/TextField'
 import ImageIcon from '@material-ui/icons/Image'
 import Button from '@material-ui/core/Button'
