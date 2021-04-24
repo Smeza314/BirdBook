@@ -51,9 +51,12 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     marginLeft: 0,
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: 240,
-    },
+  },
+  bodyContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100%',
+    position: 'relative',
   }
 }))
 
@@ -70,22 +73,24 @@ const App = () => {
               <Login />
             </Route>
             <Fragment>
-              <Navbar />
-              <PrivateRoute exact path='/'>
-                <div className={classes.content}>
-                  <Home />
-                </div>
-              </PrivateRoute>
-              <PrivateRoute path='/profile'  >
-                <div className={classes.content}>
-                  <Profile />
-                </div>
-              </PrivateRoute>
-              <PrivateRoute path='/message'>
-                <div className={classes.content}>
-                  <Message />
-                </div>
-              </PrivateRoute>
+              <div clasName={classes.bodyContent}>
+                <Navbar />
+                <PrivateRoute exact path='/'>
+                  <div className={classes.content}>
+                    <Home />
+                  </div>
+                </PrivateRoute>
+                <PrivateRoute path='/profile'  >
+                  <div className={classes.content}>
+                    <Profile />
+                  </div>
+                </PrivateRoute>
+                <PrivateRoute path='/message'>
+                  <div className={classes.content}>
+                    <Message />
+                  </div>
+                </PrivateRoute>
+              </div>
               <Footer />
             </Fragment>
           </Switch>
