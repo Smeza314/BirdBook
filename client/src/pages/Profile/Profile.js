@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = () => {
+  
   const classes = useStyles()
 
   const [userState, setUserState] = useState({

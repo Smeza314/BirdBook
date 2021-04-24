@@ -57,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     minHeight: '100%',
     position: 'relative',
+    flexGrow: 1,
   }
 }))
 
@@ -80,11 +81,10 @@ const App = () => {
                     <Home />
                   </div>
                 </PrivateRoute>
-                <PrivateRoute path='/profile'  >
-                  <div className={classes.content}>
-                    <Profile />
-                  </div>
-                </PrivateRoute>
+                <div className={classes.content}>
+                  <PrivateRoute path='/profile' component={() => <Profile key={Math.random()} />} />
+                    {/* <Profile /> */}
+                </div>
                 <PrivateRoute path='/message'>
                   <div className={classes.content}>
                     <Message />

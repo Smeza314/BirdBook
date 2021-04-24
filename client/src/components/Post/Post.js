@@ -157,7 +157,7 @@ const Post = ({ post, userImg }) => {
             <Typography variant="h6">{post.author.username}</Typography>
           </RouteLink>
         </Box>
-        <Typography variant="body1">{post.post_content}</Typography>
+        {/* <Typography variant="body1">{post.post_content}</Typography> */}
         {
           post.post_image !== ''
             ? <img src={post.post_image} alt={post.post_imageName} />
