@@ -10,6 +10,7 @@ import Tab from '@material-ui/core/Tab';
 import PropTypes from 'prop-types';
 import LoginForm from '../../components/LoginForm'
 import RegisterForm from '../../components/RegisterForm'
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 
 function TabPanel(props) {
@@ -69,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     backgroundImage: 'url(https://cdn.discordapp.com/attachments/818908729029689351/831993325774962718/wp6053464.jpg)',
+    
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -79,8 +81,20 @@ const useStyles = makeStyles((theme) => ({
     // maxwidth: '100vh',
     // maxheight: '100vh'
   },
-  
-}));
+  mobileImage: {
+    backgroundImage: './images/birdBook2.png',
+
+    backgroundRepeat: 'no-repeat',
+    backgroundColor:
+      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    height: '100vh',
+    width: '100vh',
+    // maxwidth: '100vh',
+    // maxheight: '100vh'
+  },
+  }));
 
 
 const Login = () => {
@@ -89,13 +103,18 @@ const Login = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const matches = useMediaQuery('(min-width:959px)');
 
   return (
     <>
 
       <Grid container component="main" maxWidth="xs">
         <CssBaseline />
-        <Grid item xs={false} sm={12}  lg={8} md={8} xl={6} className={classes.image} />
+        {matches ? 
+          <Grid item xs={false} sm={12}  lg={8} md={8} xl={6} className={classes.image} />
+        : 
+          <Grid item xs={false} sm={12} lg={8} md={8} xl={6} className={classes.mobileImage} />
+        }
         <Grid item xs={false} sm={12} lg={4} md={4} xl={6}>
         <div className={classes.root}>
           
