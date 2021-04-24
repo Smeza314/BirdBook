@@ -54,6 +54,14 @@ router.put('/users/friend/:id', passport.authenticate('jwt'), (req,res) => {
 
 })
 
+router.put('/user', passport.authenticate('jwt'), (req, res) => {
+  User.findByIdAndUpdate(req.user._id, req.body, {new: true})
+  .then( user => {
+    res.json(user)
+  })
+  .catch(err => console.log(err))
+})
+
 // GET route to get user by ID
 router.get('/users/:id', passport.authenticate('jwt'), (req, res) => {
   User.findById(req.params.id)

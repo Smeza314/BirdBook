@@ -152,7 +152,7 @@ const Post = ({ post, userImg }) => {
     <Grid item xs={9}>
       <Paper className={classes.paper} variant="outlined">
         <Box display="flex" alignItems="center" className={classes.Userprofile} >
-          <Avatar src={userImg} alt='User' className={classes.large} />
+          <Avatar src={post.author.profileImage} alt={post.author.username} className={classes.large} />
           <RouteLink 
             className={classes.profileLink} 
             to={`/profile`} 
@@ -161,12 +161,12 @@ const Post = ({ post, userImg }) => {
             <Typography variant="h6">{post.author.username}</Typography>
           </RouteLink>
         </Box>
+            <Typography variant="body1">{isUrl(post.post_content) ? <ReactPlayer url={post.post_content} /> : post.post_content}</Typography>
         {
           post.post_image !== ''
             ? <img src={post.post_image} className={classes.image} alt={post.post_imageName} />
-          : null 
+          : null
         }
-        <Typography variant="body1">{isUrl(post.post_content) ? <ReactPlayer url={post.post_content} /> : post.post_content}</Typography>
         <Typography variant="body2">
           <Link>
             {likes ? likes : null}<ThumbUpIcon
