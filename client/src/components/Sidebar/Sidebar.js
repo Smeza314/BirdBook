@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   textLogo: {
     height: 40, 
     width: 'auto',
-    margin: 'auto'
+    marginLeft: 5,
   },
   Userprofile: {
     marginBottom: 10, 
