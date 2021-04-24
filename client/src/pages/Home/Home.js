@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0.5),
   },
   post_image: {
-    height: 100
+    height: '10%',
+    width: 'auto'
   }
 }))
 
@@ -45,29 +46,7 @@ const Home = () => {
      
     }
   }
-
-  const handleUpload = () => {
-    // const uploadTask = storage.ref(`images/${image.name}`).put(image)
-    // uploadTask.on(
-    //   'state_changed',
-    //   snapshot => { },
-    //   error => {
-    //     console.log(error)
-    //   },
-    //   () => {
-    //     storage
-    //       .ref('images')
-    //       .child(image.name)
-    //       .getDownloadURL()
-    //       .then(url => {
-    //         console.log(url)
-    //       })
-    //   }
-    // )
-  }
-
-// console.log('image', image)
-
+  
   const [postState, setPostState] = useState({
     text: '',
     image: '',
