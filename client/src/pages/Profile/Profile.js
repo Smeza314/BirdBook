@@ -7,6 +7,9 @@ import { useState, useEffect } from 'react'
 import PostAPI from '../../utils/PostAPI'
 import Post from '../../components/Post'
 import User from '../../utils/User'
+import ProfileCard from '../../components/ProfileCard'
+import { storage } from '../../components/firebase'
+import ImageIcon from '@material-ui/icons/Image'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,8 +35,9 @@ const useStyles = makeStyles((theme) => ({
     width: '200px'
   },
   header: {
-    height: '100%', 
-    width: '100%'
+    height: '30vh', 
+    width: '100%',
+    overflow: 'hidden'
   },
 
   paper2: {
@@ -47,12 +51,23 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 15,
     maxWidth: '100%'
   },
+  imgUp: {
+    display: 'none'
+  },
+  headerImg: {
+    minHeight: '100%',
+    minWidth: '100%'
+  }
   
 }));
 
 const Profile = () => {
   
   const classes = useStyles()
+
+  const [open, setOpen] = useState(false)
+
+  const [close, setClose] = useState(false)
 
   const [userState, setUserState] = useState({
     user: {},
@@ -72,6 +87,94 @@ const Profile = () => {
         setIsFriend(true)
       })
       .catch(err => console.log(err))
+  }
+
+  const [image, setImage] = useState(null)
+  const [url, setUrl] = useState('')
+
+  const handleChange = e => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0])
+
+    }
+  }
+
+  const handleOpenProfile = event => {
+    event.preventDefault()
+    setOpen((isOpen) => !isOpen)
+  }
+
+  const handleOpenBanner = event => {
+    event.preventDefault()
+    setClose((isClose) => !isClose)
+  }
+
+  const handleEditProfile = event => {
+    event.preventDefault()
+    if (image !== null) {
+      const uploadTask = storage.ref(`images/${image.name}`).put(image)
+      uploadTask.on(
+        'state_changed',
+        snapshot => { },
+        error => {
+          console.log(error)
+        },
+        () => {
+          storage
+            .ref('images')
+            .child(image.name)
+            .getDownloadURL()
+            .then(url => {
+              setUrl(url)
+              console.log(url)
+              const profilePic = {
+                profileImage: url
+              }
+              User.editProfile(profilePic)
+                .then(({ data: newUser }) => {
+                  setUserState({ ...userState, user: newUser })
+                  setUrl('')
+                  setImage(null)
+                })
+                .catch(err => console.log(err))
+            })
+        }
+      )
+    }
+  }
+
+  const handleEditBanner = event => {
+    event.preventDefault()
+    if (image !== null) {
+      const uploadTask = storage.ref(`images/${image.name}`).put(image)
+      uploadTask.on(
+        'state_changed',
+        snapshot => { },
+        error => {
+          console.log(error)
+        },
+        () => {
+          storage
+            .ref('images')
+            .child(image.name)
+            .getDownloadURL()
+            .then(url => {
+              setUrl(url)
+              console.log(url)
+              const bannerPic = {
+                bannerImage: url
+              }
+              User.editProfile(bannerPic)
+                .then(({ data: newUser }) => {
+                  setUserState({ ...userState, user: newUser })
+                  setUrl('')
+                  setImage(null)
+                })
+                .catch(err => console.log(err))
+            })
+        }
+      )
+    }
   }
 
   useEffect(() => {
@@ -107,9 +210,10 @@ const Profile = () => {
           justify="space-evenly"
           alignItems="center" >
           <Grid item xs={9}>
-              <img
-              className={classes.header} 
-                src="https://cdn.discordapp.com/attachments/818908729029689351/831993325774962718/wp6053464.jpg" alt=""/>
+              
+            <div className={classes.header} >
+              <img className={classes.headerImg} src={userState.user.bannerImage} alt=""/>
+            </div>
           </Grid>
           
         </Grid>
@@ -125,12 +229,66 @@ const Profile = () => {
           spacing={1}
           justify="center"
           
-        >  
+        >
+          
+          <Grid item xs={9}>
+            <ProfileCard />
+          </Grid>
           {profileState.profile._id === userState.user._id
             ? <>
               <Grid item xs={9}>
-              <Button color='primary' variant='contained'>Edit Profile Picture</Button>
-              <Button color='primary'>Edit Banner Picture</Button>
+                <Button 
+                  onClick={handleOpenProfile} 
+                  color='primary'
+                >Edit Profile Picture</Button>
+                <Button 
+                  onClick={handleOpenBanner} 
+                  color='primary'
+                >Edit Banner Picture</Button>
+                {close ? (
+                  <div>
+                    <input accept="image/*" onChange={handleChange} className={classes.imgUp} id="contained-button-file" multiple type="file" />
+                    <label htmlFor="contained-button-file">
+                      <Button
+                        style={{ marginRight: 10 }}
+                        variant="contained"
+                        color="primary"
+                        component="span"
+                        startIcon={<ImageIcon />}
+                        className={classes.postButtons}
+                      >
+                        Image
+                      </Button>
+                    </label>
+                    <Button 
+                      color='primary' 
+                      variant='contained' 
+                      onClick={handleEditBanner}
+                      >Upload Banner Picture</Button>
+                  </div>
+                  ) : null}
+                {open ? (
+                  <div style={{marginTop: 10}}>
+                    <input accept="image/*" onChange={handleChange} className={classes.imgUp} id="contained-button-file" multiple type="file" />
+                    <label htmlFor="contained-button-file">
+                      <Button
+                        style={{ marginRight: 10 }}
+                        variant="contained"
+                        color="primary"
+                        component="span"
+                        startIcon={<ImageIcon />}
+                        className={classes.postButtons}
+                      >
+                        Image
+                      </Button>
+                    </label>
+                    <Button 
+                    color='primary' 
+                    onClick={handleEditProfile} 
+                    variant='contained'
+                    > Upload Profile Picture</Button>
+                  </div>
+                  ) : null}
               </Grid>
               <Grid item xs={9}>
                 <Typography variant="h4" gutterBottom>

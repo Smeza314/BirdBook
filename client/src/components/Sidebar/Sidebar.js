@@ -102,10 +102,10 @@ const Sidebar = ({ handleDrawerToggle }) => {
     { isLoading ? null:  
     <>
       <div className={classes.toolbar} >
-        <img src='./images/birdBookText.png' alt='text logo' className={classes.textLogo} />
+        <img src='./images/birdBookText.png' alt='text logo' className={classes.textLogo}/>
       </div>
       <Box display="flex" alignItems="center" className={classes.Userprofile} >
-        <Avatar src='./images/birdBook.png' alt='User' className={classes.large} />
+            <Avatar src={userState.user.profileImage} alt={userState.user.username} className={classes.large} />
         <h4>{userState.user.username}</h4>
       </Box>
       <div className={classes.sideTab}>
