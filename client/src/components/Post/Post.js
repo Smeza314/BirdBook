@@ -56,8 +56,8 @@ const useStyles = makeStyles((theme) => ({
     color: 'black'
   },
   image: {
-    height: 300,
-    width: 'auto'
+    height: '20%',
+    width: '30%'
   }
 }))
 
