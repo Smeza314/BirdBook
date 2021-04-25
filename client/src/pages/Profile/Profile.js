@@ -62,12 +62,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = () => {
+  
   const classes = useStyles()
-
   const [open, setOpen] = useState(false)
-
   const [close, setClose] = useState(false)
-
   const [userState, setUserState] = useState({
     user: {},
   })
@@ -78,7 +76,9 @@ const Profile = () => {
     posts: []
   })
   const [isFriend, setIsFriend] = useState(false)
-
+  const [image, setImage] = useState(null)
+  const [url, setUrl] = useState('')
+  
   const handleAddFriend = event => {
     event.preventDefault()
     User.addFriend(localStorage.getItem('profile'))
@@ -87,9 +87,6 @@ const Profile = () => {
       })
       .catch(err => console.log(err))
   }
-
-  const [image, setImage] = useState(null)
-  const [url, setUrl] = useState('')
 
   const handleChange = e => {
     if (e.target.files[0]) {
@@ -101,11 +98,13 @@ const Profile = () => {
   const handleOpenProfile = event => {
     event.preventDefault()
     setOpen((isOpen) => !isOpen)
+    setClose(false)
   }
 
   const handleOpenBanner = event => {
     event.preventDefault()
     setClose((isClose) => !isClose)
+    setOpen(false)
   }
 
   const handleEditProfile = event => {
@@ -134,6 +133,7 @@ const Profile = () => {
                   setUserState({ ...userState, user: newUser })
                   setUrl('')
                   setImage(null)
+                  window.location.reload()
                 })
                 .catch(err => console.log(err))
             })
@@ -168,6 +168,7 @@ const Profile = () => {
                   setUserState({ ...userState, user: newUser })
                   setUrl('')
                   setImage(null)
+                  window.location.reload()
                 })
                 .catch(err => console.log(err))
             })
@@ -208,10 +209,10 @@ const Profile = () => {
           direction="column"
           justify="space-evenly"
           alignItems="center" >
-          <Grid item xs={9}>
+          <Grid item xs={9} >
               
             <div className={classes.header} >
-              <img className={classes.headerImg} src={userState.user.bannerImage} alt=""/>
+              <img className={classes.headerImg} src={profileState.profile.bannerImage} alt=""/>
             </div>
           </Grid>
           
@@ -267,7 +268,7 @@ const Profile = () => {
                   </div>
                   ) : null}
                 {open ? (
-                  <div style={{marginTop: 10}}>
+                  <div>
                     <input accept="image/*" onChange={handleChange} className={classes.imgUp} id="contained-button-file" multiple type="file" />
                     <label htmlFor="contained-button-file">
                       <Button

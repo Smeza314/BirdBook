@@ -32,7 +32,7 @@ export default function ProfileCard({ user }) {
   })
 
   useEffect(() => {
-    User.info()
+    User.profileInfo(localStorage.getItem('profile'))
       .then(({ data: user }) => {
         const newUser = user
         setUserState({ ...userState, user: newUser })
