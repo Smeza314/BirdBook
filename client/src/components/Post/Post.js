@@ -228,7 +228,7 @@ const Post = ({ post, userImg }) => {
               >Submit</Button>
             </form>
             <Button
-              variant="contained"
+              // variant="contained"
               color="primary"
               className={classes.postButtons}
               size="small"
