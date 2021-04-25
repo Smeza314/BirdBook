@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
   large: {
     width: theme.spacing(7),
     height: theme.spacing(7),
+    marginLeft: 5
   },
   sideTab: {
     backgroundColor: theme.palette.background.paper,
@@ -105,8 +106,8 @@ const Sidebar = ({ handleDrawerToggle }) => {
         <img src='./images/birdBookText.png' alt='text logo' className={classes.textLogo}/>
       </div>
       <Box display="flex" alignItems="center" className={classes.Userprofile} >
-            <Avatar src={userState.user.profileImage} alt={userState.user.username} className={classes.large} />
-        <h4>{userState.user.username}</h4>
+        <Avatar src={userState.user.profileImage} alt={userState.user.username} className={classes.large} />
+        <h4 style={{ marginLeft: 15}}>{userState.user.username}</h4>
       </Box>
       <div className={classes.sideTab}>
       <AppBar position="static" color="default">
@@ -128,7 +129,7 @@ const Sidebar = ({ handleDrawerToggle }) => {
                 <span key={friend._id}>
                   <ListItem alignItems="center">
                     <ListItemAvatar>
-                      <Avatar alt={friend.username} src={'./images/birdBook2.png'} />
+                      <Avatar alt={friend.username} src={friend.profileImage} />
                     </ListItemAvatar>
                     <Link 
                       component={RouterLink} 

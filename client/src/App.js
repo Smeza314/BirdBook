@@ -20,9 +20,9 @@ import { Fragment } from 'react'
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: '#60ad5e',
+      light: '#73e8ff',
       main: '#29b6f6',
-      dark: '#005005',
+      dark: '#0086c3',
       contrastText: '#fff',
     },
     secondary: {
