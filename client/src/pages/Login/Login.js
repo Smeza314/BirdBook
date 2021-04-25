@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
     // maxheight: '100vh'
   },
   mobileImage: {
-    backgroundImage: './images/birdBook2.png',
+    backgroundImage: 'url(https://cdn.discordapp.com/attachments/818908729029689351/831993325774962718/wp6053464.jpg)',
 
     backgroundRepeat: 'no-repeat',
     backgroundColor:
@@ -91,8 +91,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: 'center',
     height: '100vh',
     width: '100vh',
-    // maxwidth: '100vh',
-    // maxheight: '100vh'
+    minwidth: '100vh',
+    minheight: '100vh'
   },
   }));
 
