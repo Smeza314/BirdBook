@@ -214,7 +214,7 @@ const Profile = () => {
           direction="column"
           justify="space-evenly"
           alignItems="center" >
-          <Grid item xs={9} >
+          <Grid item xs={11} sm={9} >
               
             <div className={classes.header} >
               <img className={classes.headerImg} src={profileState.profile.bannerImage} alt=""/>
@@ -236,12 +236,12 @@ const Profile = () => {
           
         >
           
-          <Grid item xs={9}>
+          <Grid item xs={11} sm={9}>
             <ProfileCard />
           </Grid>
           {profileState.profile._id === userState.user._id
             ? <>
-              <Grid item xs={9}>
+              <Grid item xs={11} sm={9}>
                 <Button 
                   onClick={handleOpenProfile} 
                   color='primary'
@@ -295,7 +295,7 @@ const Profile = () => {
                   </div>
                   ) : null}
               </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={11} sm={9}>
                 <Typography variant="h4" gutterBottom>
                   Your Posts
                 </Typography>
@@ -303,13 +303,13 @@ const Profile = () => {
               </Grid>
               </>
             : <>
-              <Grid item xs={9}>
+              <Grid item xs={11} sm={9}>
                 {isFriend ?
                   <Button color='primary' variant='contained' disabled>Add Friend</Button>
                 : <Button color='primary' variant='contained' onClick={handleAddFriend}>Add Friend</Button>
                 }
               </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={11} sm={9}>
                 <Typography variant="h4" gutterBottom>
                   {profileState.profile.username}'s Posts
                 </Typography>

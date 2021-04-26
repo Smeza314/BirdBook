@@ -133,7 +133,7 @@ const Home = () => {
       spacing={1}
       justify="center"
     >
-      <Grid item xs={9}>
+      <Grid item xs={11} sm={9}>
         <Paper className={classes.paper} variant="outlined">
           <Typography variant="h4">
             New Post
@@ -179,7 +179,7 @@ const Home = () => {
           </form>
         </Paper>
       </Grid>
-      <Grid item xs={9}>
+      <Grid item xs={11} sm={9}>
         <Typography variant="h4" gutterBottom>
           Feed: 
         </Typography>

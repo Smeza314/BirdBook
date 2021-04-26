@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
   small: {
     width: theme.spacing(2.5),
     height: theme.spacing(2.5),
+    marginRight: 5
   },
   commentLink: {
     marginLeft: 10,
@@ -157,7 +158,7 @@ const Post = ({ post, userImg }) => {
   return(
     <>
     { isLoading ? null:
-    <Grid item xs={9}>
+    <Grid item xs={11} sm={9}>
       <Paper className={classes.paper} variant="outlined">
         <Box display="flex" alignItems="center" className={classes.Userprofile} >
           <Avatar src={post.author.profileImage} alt={post.author.username} className={classes.large} />
@@ -201,7 +202,7 @@ const Post = ({ post, userImg }) => {
             </Link>
         </Typography>
         {open ? (
-          <Box>
+          <Box style={{marginTop: 10}}>
             <Divider />
             <Typography variant="h6">Comments:</Typography>
             {
@@ -211,7 +212,7 @@ const Post = ({ post, userImg }) => {
                 <Box
                   display="flex" 
                   alignItems="center" 
-                  className={classes.Userprofile} 
+                  style={{ marginTop: 5 }}
                 >
                   <Avatar 
                     src={comment.author.profileImage}
@@ -220,7 +221,7 @@ const Post = ({ post, userImg }) => {
                   />
                   <Typography variant="subtitle2" >{comment.author.username}</Typography>
                 </Box>
-                <Typography variant="body2">{comment.comment_text}</Typography>
+                <Typography variant="body2" style={{ marginBottom: 3}}>{comment.comment_text}</Typography>
                 <Divider />
                 </span>
               ))
