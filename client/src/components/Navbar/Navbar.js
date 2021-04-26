@@ -10,8 +10,11 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../../App.css'
 import Sidebar from '../Sidebar'
-import { useEffect } from "react";
-import User from "../../utils/User";
+import { useEffect } from "react"
+import User from "../../utils/User"
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 
 const drawerWidth = 240;
 
@@ -63,6 +66,8 @@ const Navbar = (props) => {
   const [user, setUser] = useState({
     id: ""
   })
+  const matches = useMediaQuery('(min-width:420px)');
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
   }
@@ -70,6 +75,17 @@ const Navbar = (props) => {
   const handleProfileLink = () => {
     localStorage.setItem('profile', user.id)
   }
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+  
 
   useEffect(() =>{
     User.info()
@@ -94,24 +110,64 @@ const Navbar = (props) => {
             <MenuIcon />
           </IconButton>
           <img className='Logo' alt='logo' src='/images/birdBook2.png' />
-          <Typography variant='h6' className={classes.title}>
-          <Link to='/' className={classes.link}>
-            <Button color='inherit'>Feed</Button>
-          </Link>
-          <Link 
-            to={`/profile`} 
-            className={classes.link}
-            onClick={handleProfileLink}
-          >
-            <Button color='inherit'>Profile</Button>
-          </Link>
-          <Link 
-            to={`/message`} 
-            className={classes.link}
-          >
-            <Button color='inherit'>Messages</Button>
-          </Link>
-          </Typography>
+          { matches ?
+            <Typography variant='h6' className={classes.title}>
+            <Link to='/' className={classes.link}>
+              <Button color='inherit'>Feed</Button>
+            </Link>
+            <Link 
+              to={`/profile`} 
+              className={classes.link}
+              onClick={handleProfileLink}
+            >
+              <Button color='inherit'>Profile</Button>
+            </Link>
+            <Link 
+              to={`/message`} 
+              className={classes.link}
+            >
+              <Button color='inherit'>Messages</Button>
+            </Link>
+            </Typography>
+            :  
+            <>
+            <Typography variant='h6' className={classes.title}>
+              <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.link} onClick={handleClick}>
+                Menu
+              </Button>
+            </Typography>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>
+                <Link to='/' className={classes.link}>
+                  <Button color='inherit'>Feed</Button>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link
+                  to={`/profile`}
+                  className={classes.link}
+                  onClick={handleProfileLink}
+                >
+                  <Button color='inherit'>Profile</Button>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link
+                  to={`/message`}
+                  className={classes.link}
+                >
+                  <Button color='inherit'>Messages</Button>
+                </Link>
+              </MenuItem>
+            </Menu>
+            </>
+          }
           <Link to='/login' className={classes.link}>
             <Button onClick={handleLogOut} color='inherit'>Sign Out</Button>
           </Link>
