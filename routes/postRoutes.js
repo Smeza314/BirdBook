@@ -75,4 +75,13 @@ router.get('/posts/user/:id', passport.authenticate('jwt'), (req, res) => {
     .catch(err => console.log(err))
 })
 
+// router.get('/posts/likes/:id', passport.authenticate('jwt'), (req, res) => {
+//   Post.find({})
+//     .populate('likes')
+//     .then((likes) => res.json(likes))
+//     .catch((err) => console.log(err))
+// })
+
+
+
 module.exports = router

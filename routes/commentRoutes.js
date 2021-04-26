@@ -27,7 +27,8 @@ router.post('/comments/:id', passport.authenticate('jwt'), (req, res) => {
               post: comment.post,
               _id: comment._id,
               author: {
-                username: req.user.username
+                username: req.user.username,
+                profileImage: req.user.profileImage
               }
             })
           })
