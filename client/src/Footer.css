@@ -1,0 +1,25 @@
+html, body {
+  min-height: 100%;
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.footer {
+  flex-shrink: 0;
+  text-align: center;
+  background-color: #29b6f6;
+  color: white;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 4vh;
+  
+}
+
+
