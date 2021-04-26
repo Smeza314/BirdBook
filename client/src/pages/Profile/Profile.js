@@ -35,9 +35,10 @@ const useStyles = makeStyles((theme) => ({
     width: '200px'
   },
   header: {
-    height: '30vh', 
+    height: '35vh', 
     width: '100%',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    display: 'flex'
   },
 
   paper2: {
@@ -55,8 +56,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'none'
   },
   headerImg: {
-    minHeight: '100%',
-    minWidth: '100%'
+    flex: 'none',
+    // minHeight: '100%',
+    minWidth: '100%',
+    // position: 'absolute',
+    // left: '50%',
+    // top: '50%',
   }
   
 }));
