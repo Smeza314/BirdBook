@@ -89,6 +89,7 @@ const Profile = () => {
     User.addFriend(localStorage.getItem('profile'))
       .then(() => {
         setIsFriend(true)
+        window.location.reload()
       })
       .catch(err => console.log(err))
   }
