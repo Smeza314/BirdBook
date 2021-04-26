@@ -1,6 +1,7 @@
 html, body {
   min-height: 100%;
   font-family: sans-serif;
+  margin-bottom: 5vh;
 }
 
 body {
@@ -13,7 +14,7 @@ body {
   text-align: center;
   background-color: #29b6f6;
   color: white;
-  position: relative;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
