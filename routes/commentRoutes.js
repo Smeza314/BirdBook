@@ -4,7 +4,7 @@ const passport = require('passport')
 
 router.get('/comments/:id', passport.authenticate('jwt'), (req, res) => {
   Comment.find({ post: req.params.id })
-    .populate('author','username')
+    .populate('author',['username', 'profileImage'])
     .then(comments => res.json(comments))
     .catch(err => console.log(err))
 })

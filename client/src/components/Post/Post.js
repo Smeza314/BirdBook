@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
   small: {
     width: theme.spacing(2.5),
     height: theme.spacing(2.5),
+    marginRight: 5
   },
   commentLink: {
     marginLeft: 10,
@@ -53,7 +54,22 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: 'underline'
     },
     textDecoration: 'none',
-    color: 'black'
+    color: 'black',
+    marginLeft: 10
+  },
+  image: {
+    height: '20%',
+    width: '30%'
+  },
+  playerWrapper: {
+    position: 'relative',
+    paddingTop: '56.25%',
+    marginTop: 15
+  },
+  reactPlayer: {
+    position: 'absolute',
+    top: 0,
+    left: 0
   }
 }))
 
@@ -61,19 +77,17 @@ const useStyles = makeStyles((theme) => ({
 const Post = ({ post, userImg }) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
-
   const [commentState, setCommentState] = useState({
     comment_text: '',
     comments: []
   })
-
   const [userInfo, setUserInfo] = useState({
     id: ''
   })
-
   const [likes, setLikes] = useState(0)
   const [isLiked, setIsLiked] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+
   const isUrl = (string) => {
     var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
     return regexp.test(string)
@@ -118,7 +132,6 @@ const Post = ({ post, userImg }) => {
 
   const handleProfileLink = () => {
     localStorage.setItem('profile', post.author._id)
-    // window.location = `/profile/${post.author._id}`
   }
 
   useEffect(() => {
@@ -145,10 +158,10 @@ const Post = ({ post, userImg }) => {
   return(
     <>
     { isLoading ? null:
-    <Grid item xs={9}>
+    <Grid item xs={11} sm={9}>
       <Paper className={classes.paper} variant="outlined">
         <Box display="flex" alignItems="center" className={classes.Userprofile} >
-          <Avatar src={userImg} alt='User' className={classes.large} />
+          <Avatar src={post.author.profileImage} alt={post.author.username} className={classes.large} />
           <RouteLink 
             className={classes.profileLink} 
             to={`/profile`} 
@@ -157,13 +170,25 @@ const Post = ({ post, userImg }) => {
             <Typography variant="h6">{post.author.username}</Typography>
           </RouteLink>
         </Box>
-        <Typography variant="body1">{post.post_content}</Typography>
+          <Typography variant="body1">
+            {isUrl(post.post_content) ? 
+              <div className={classes.playerWrapper}>
+                <ReactPlayer 
+                  url={post.post_content}
+                  className={classes.reactPlayer} 
+                  width={'100%'}
+                  height={'100%'}
+                  controls={true}
+                /> 
+              </div>
+              : post.post_content
+            }
+          </Typography>
         {
           post.post_image !== ''
-            ? <img src={post.post_image} alt={post.post_imageName} />
-          : null 
+            ? <img src={post.post_image} className={classes.image} alt={post.post_imageName} />
+          : null
         }
-        <Typography variant="body1">{isUrl(post.post_content) ? <ReactPlayer url={post.post_content} /> : post.post_content}</Typography>
         <Typography variant="body2">
           <Link>
             {likes ? likes : null}<ThumbUpIcon
@@ -177,7 +202,7 @@ const Post = ({ post, userImg }) => {
             </Link>
         </Typography>
         {open ? (
-          <Box>
+          <Box style={{marginTop: 10}}>
             <Divider />
             <Typography variant="h6">Comments:</Typography>
             {
@@ -185,19 +210,18 @@ const Post = ({ post, userImg }) => {
               ? commentState.comments.map(comment => (
                 <span key={comment._id}>
                 <Box
-                  
                   display="flex" 
                   alignItems="center" 
-                  className={classes.Userprofile} 
+                  style={{ marginTop: 5 }}
                 >
                   <Avatar 
-                  src='./images/birdBook.png' 
-                  alt='User' 
-                  className={classes.small} 
+                    src={comment.author.profileImage}
+                    alt={comment.author.username}
+                    className={classes.small} 
                   />
                   <Typography variant="subtitle2" >{comment.author.username}</Typography>
                 </Box>
-                <Typography variant="body2">{comment.comment_text}</Typography>
+                <Typography variant="body2" style={{ marginBottom: 3}}>{comment.comment_text}</Typography>
                 <Divider />
                 </span>
               ))
@@ -225,7 +249,6 @@ const Post = ({ post, userImg }) => {
               >Submit</Button>
             </form>
             <Button
-              variant="contained"
               color="primary"
               className={classes.postButtons}
               size="small"

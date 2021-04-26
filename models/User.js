@@ -18,7 +18,15 @@ const User = new Schema({
   friends: [{
     type: Schema.Types.ObjectId,
     ref: 'User'
-  }]
+  }],
+  profileImage: {
+    type: String,
+    default: './images/birdBook2.png'
+  },
+  bannerImage: {
+    type: String,
+    default: './images/defaultBanner.jpg'
+  }
 })
 
 // Add picture section to model. 
